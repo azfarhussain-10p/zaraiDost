@@ -1,414 +1,349 @@
-# Zarai Dost - AI-Powered Agricultural Advisory Platform
+# 🌾 Zarai Dost (زرعی دوست) - Smart Agriculture Platform
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
-[![Node Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen)](package.json)
-[![Python Version](https://img.shields.io/badge/python-%3E%3D3.9-blue)](ml/requirements.txt)
+> **"Your Farming Friend"** - An offline-first, AI-powered agriculture assistant for smallholder farmers in Pakistan
 
-> Empowering Pakistan's smallholder farmers with offline-first AI guidance for crop health, irrigation, market intelligence, and climate-smart decisions.
+[![Status](https://img.shields.io/badge/Status-Active%20Development-green)]()
+[![Stories Complete](https://img.shields.io/badge/Stories-1%2F22%20Complete-yellow)]()
+[![License](https://img.shields.io/badge/License-MIT-blue)]()
 
-## Overview
+---
 
-**Zarai Dost** (Farmer's Friend) is a comprehensive agricultural advisory system designed for Pakistan's small-scale farmers, addressing the critical challenges of declining crop production (13.5% drop in FY2025) and climate variability. Built for the AI Wrapper Competition 2025, it combines cutting-edge AI with cultural relevance and offline-first architecture to serve farmers in low-connectivity rural areas.
+## 📋 Table of Contents
 
-### Key Features
+- [Overview](#overview)
+- [Project Status](#project-status)
+- [Features](#features)
+- [Architecture](#architecture)
+- [Getting Started](#getting-started)
+- [Development](#development)
+- [Project Structure](#project-structure)
+- [Documentation](#documentation)
+- [Contributing](#contributing)
 
-- **Offline-First Intelligence**: Full functionality without internet through on-device AI processing
-- **Crop Health Monitoring**: Detect 50+ diseases and pests using computer vision (TensorFlow Lite)
-- **Smart Irrigation Management**: Predictive moisture analysis with weather integration
-- **Market Intelligence**: Price predictions and optimal selling recommendations
-- **Climate-Smart Advisory**: Sowing guidance and extreme weather alerts
-- **Voice-Powered Accessibility**: Multi-language support (Urdu, Punjabi, Sindhi) for low-literacy users
-- **Community Learning Network**: Peer-to-peer knowledge sharing and farmer groups
+---
 
-### Success Metrics
+## 🎯 Overview
 
-| Metric | Target | Timeline |
-|--------|--------|----------|
-| User Adoption | 10,000 active users | 6 months |
-| Yield Improvement | 20-30% (self-reported) | Per season |
-| AI Diagnosis Accuracy | 85% for 50+ diseases | Ongoing |
-| NPS Score | >70 | Quarterly |
+Zarai Dost is a comprehensive smart agriculture platform designed specifically for smallholder farmers in Pakistan. The platform provides:
 
-## Architecture
+- **Offline-First Operation**: Works without internet connectivity
+- **Multilingual Support**: Urdu, Punjabi, Sindhi with voice interaction
+- **AI-Powered Insights**: Crop disease detection, irrigation recommendations, market intelligence
+- **Voice Accessibility**: Voice commands for low-literacy users
+- **Climate Intelligence**: Weather forecasting and climate-smart recommendations
 
-Zarai Dost uses a modular, offline-first architecture optimized for intermittent connectivity and low-end devices:
+### Target Users
+- Smallholder farmers in rural Pakistan
+- Limited internet connectivity (2G/3G in remote areas)
+- Low digital literacy
+- Urdu/regional language speakers
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    User Interfaces                           │
-│  ┌──────────────────┐  ┌──────────────────┐  ┌────────────┐│
-│  │  Mobile App      │  │   Web App (PWA)  │  │  SMS/Voice ││
-│  │  (React Native)  │  │   (React.js)     │  │  Gateway   ││
-│  └────────┬─────────┘  └────────┬─────────┘  └──────┬─────┘│
-└───────────┼────────────────────┼────────────────────┼──────┘
-            │                    │                    │
-            └────────────────────┴────────────────────┘
-                                 │
-                    ┌────────────▼────────────┐
-                    │   API Gateway           │
-                    │   (GraphQL/REST)        │
-                    └────────────┬────────────┘
-                                 │
-            ┌────────────────────┴────────────────────┐
-            │                                          │
-   ┌────────▼─────────┐                  ┌───────────▼──────────┐
-   │  AI Wrapper      │                  │  Core Services       │
-   │  (Model Abstraction)                │  (Node.js + Python)  │
-   │                  │                  │                      │
-   │  • GPT/Claude    │                  │  • Auth & Sync       │
-   │  • Gemini/Llama  │                  │  • Weather API       │
-   │  • LangChain     │                  │  • Market Data       │
-   └──────────────────┘                  └──────────────────────┘
-            │                                          │
-            └────────────────────┬────────────────────┘
-                                 │
-                    ┌────────────▼────────────┐
-                    │   Data Layer            │
-                    │                         │
-                    │  PostgreSQL │ Redis     │
-                    │  S3 Storage │ SQLite    │
-                    └─────────────────────────┘
-```
+---
 
-### Tech Stack
+## 📊 Project Status
 
-#### Frontend
-- **Mobile**: React Native + Expo (iOS/Android)
-- **Web**: React.js + Next.js (PWA)
-- **On-Device AI**: TensorFlow Lite
-- **State Management**: Redux Toolkit
-- **Offline Storage**: SQLite, AsyncStorage
+### ✅ Completed (4.5% - 1/22 stories)
 
-#### Backend
-- **API Server**: Node.js + Express + GraphQL
-- **ML Services**: Python + Flask
-- **Authentication**: JWT + OAuth 2.0
-- **Background Jobs**: Bull Queue
+#### Epic 1: Offline-First Intelligence
+- ✅ **Story 1.1: Local Data Storage Foundation** - COMPLETE
+  - SQLite database with 5 tables (farmers, fields, crops, queries, images)
+  - Repository pattern (Base + 5 specialized repositories)
+  - Storage Manager (<100MB limit enforcement)
+  - 3 offline screens (Farm Dashboard, Query History, Crop Details)
+  - Migration system with version management
 
-#### AI/ML
-- **Model Wrapper**: Custom abstraction layer (LangChain)
-- **Base Models**: OpenAI GPT, Anthropic Claude, Google Gemini
-- **Image Processing**: TensorFlow, Google AutoML
-- **Voice**: Google Speech-to-Text, Festival TTS
-- **Weather**: IBM Weather API
+- 🔄 **Story 1.2: Background Synchronization Service** - IN PROGRESS (30%)
+  - Network monitoring (WiFi/cellular detection)
+  - Sync orchestration with exponential backoff
+  - Mock API layer (awaiting backend implementation)
 
-#### Infrastructure
-- **Cloud**: AWS (Lambda, S3, RDS, ElastiCache)
-- **IaC**: AWS CDK (TypeScript)
-- **Database**: PostgreSQL 14+, Redis 7+
-- **Monitoring**: Prometheus + Grafana
+### 🚧 In Progress
+
+- Story 1.2: Background Synchronization Service (30% complete)
+
+### 📋 Remaining Stories (20/22)
+
+#### Epic 1: Offline-First Intelligence (4 stories remaining)
+- [ ] 1.3: Offline AI Model Storage
+- [ ] 1.4: Offline Image Processing Queue
+- [ ] 1.5: Offline Weather and Advisory Cache
+- [ ] 1.6: Network Status and Sync Monitoring
+
+#### Epic 2: Voice-Powered Accessibility (7 stories)
+- [ ] 2.1: Voice Input Foundation (Urdu)
+- [ ] 2.2: Multi-Language Voice Support
+- [ ] 2.3: Voice Response Output
+- [ ] 2.4: Contextual Voice Commands
+- [ ] 2.5: Offline Voice Basics
+- [ ] 2.6: Voice Clarifications and Error Handling
+- [ ] 2.7: Voice Accessibility Settings
+
+#### Epic 3: Crop Health Monitoring (9 stories - ALL APPROVED)
+- [ ] 3.1: Image Capture and Upload Interface
+- [ ] 3.2: On-Device Disease Detection Model
+- [ ] 3.3: Cloud-Based Enhanced Analysis
+- [ ] 3.4: Treatment Recommendations Engine
+- [ ] 3.5: Local Supplier Integration
+- [ ] 3.6: Disease History and Tracking
+- [ ] 3.7: Multi-Crop and Field Management
+- [ ] 3.8: Multilingual Disease Information
+- [ ] 3.9: Confidence and Accuracy Feedback Loop
+
+**Note**: Epics 4-7 (37 additional stories) are documented in PRD but not yet in development sprint.
+
+---
+
+## ✨ Features
+
+### Currently Implemented ✅
+
+#### Local Data Storage
+- Offline SQLite database with full CRUD operations
+- 5 core entities: Farmers, Fields, Crops, Queries, Images
+- Foreign key relationships and indexes
+- Automatic data cleanup (90-day query retention, 50-image limit)
+- Storage monitoring (<100MB enforcement)
+
+#### Mobile UI
+- Farm Dashboard with field/crop management
+- Query History with search and filtering
+- Crop Details with image gallery
+- Offline mode indicator
+- Empty state handling
+- Real-time statistics
+
+#### Data Management
+- Repository pattern for data access
+- Transaction support for multi-table operations
+- Sync status tracking (pending/synced/conflict)
+- Timestamp-based conflict detection
+
+### Planned Features 🚀
+
+- Background data synchronization
+- AI-powered crop disease detection (TensorFlow Lite)
+- Voice input/output in Urdu and regional languages
+- Weather forecasting and irrigation recommendations
+- Market price intelligence
+- Climate-smart crop advisory
+- Community knowledge sharing
+
+---
+
+## 🏗️ Architecture
+
+### Technology Stack
+
+#### Mobile App
+- **Framework**: React Native with Expo
+- **Navigation**: React Navigation
+- **Local Database**: SQLite (expo-sqlite)
+- **State Management**: React Hooks
+- **Network**: NetInfo for connectivity detection
+- **Testing**: Jest + React Native Testing Library
+
+#### Backend (Planned)
+- **API**: Node.js + Express + GraphQL
+- **Database**: PostgreSQL
+- **Storage**: AWS S3
+- **AI/ML**: TensorFlow Serving
+- **Cache**: Redis
+
+#### Infrastructure (Planned)
+- **Cloud**: AWS CDK
+- **Deployment**: AWS ECS/Fargate
 - **CI/CD**: GitHub Actions
 
-#### Monorepo
-- **Build System**: Turborepo
-- **Package Manager**: pnpm
-- **Code Quality**: ESLint, Prettier, Husky
+### Architecture Principles
 
-## Project Structure
+1. **Offline-First**: All core functionality works without internet
+2. **Progressive Enhancement**: Online features enhance but don't block
+3. **Data Sovereignty**: User data stored locally first
+4. **Sync When Possible**: Background sync when connectivity available
+5. **Modular Design**: Microservices for scalability
 
-```
-zaraiDost/
-├── apps/
-│   ├── mobile/              # React Native mobile app
-│   ├── web/                 # React.js web dashboard (PWA)
-│   └── api/                 # Node.js GraphQL API server
-├── packages/
-│   ├── ai-wrapper/          # AI model abstraction layer
-│   ├── shared/              # Shared utilities, types, constants
-│   ├── ui/                  # Shared UI components
-│   └── database/            # Database schemas and migrations
-├── ml/
-│   ├── models/              # TensorFlow Lite models
-│   ├── training/            # Model training scripts
-│   └── inference/           # Python inference services
-├── infrastructure/
-│   ├── cdk/                 # AWS CDK deployment stacks
-│   └── terraform/           # Alternative IaC (if needed)
-├── docs/
-│   ├── prd/                 # Product requirements
-│   ├── architecture/        # Architecture documentation
-│   └── stories/             # User stories and epics
-├── scripts/                 # Build and deployment scripts
-├── .github/
-│   └── workflows/           # CI/CD pipelines
-├── turbo.json              # Turborepo configuration
-├── package.json            # Root package manifest
-└── pnpm-workspace.yaml     # pnpm workspace config
-```
+---
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
-- **Node.js**: >=18.0.0 (LTS recommended)
-- **Python**: >=3.9
-- **pnpm**: >=8.0.0
-- **Docker**: >=20.0 (for local services)
-- **PostgreSQL**: >=14.0
-- **Redis**: >=7.0
-- **AWS CLI**: >=2.0 (for deployment)
-- **Expo CLI**: Latest (for mobile development)
+- Node.js 18+ (v20.19.4+ recommended)
+- npm or yarn
+- Expo CLI
+- iOS Simulator (Mac) or Android Studio
 
 ### Installation
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/zaraiDost.git
-   cd zaraiDost
-   ```
-
-2. **Install dependencies**
-   ```bash
-   # Install Node.js dependencies
-   pnpm install
-
-   # Install Python dependencies
-   cd ml
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   pip install -r requirements.txt
-   cd ..
-   ```
-
-3. **Set up environment variables**
-   ```bash
-   # Copy example environment files
-   cp .env.example .env
-   cp apps/mobile/.env.example apps/mobile/.env
-   cp apps/api/.env.example apps/api/.env
-
-   # Edit .env files with your API keys and configuration
-   # Required:
-   # - OPENAI_API_KEY
-   # - ANTHROPIC_API_KEY
-   # - GOOGLE_CLOUD_API_KEY
-   # - IBM_WEATHER_API_KEY
-   # - DATABASE_URL
-   # - REDIS_URL
-   ```
-
-4. **Start local services**
-   ```bash
-   # Using Docker Compose
-   docker-compose up -d postgres redis
-
-   # Run database migrations
-   pnpm --filter @zaraidost/database migrate
-   ```
-
-5. **Start development servers**
-   ```bash
-   # Start all services (uses Turborepo)
-   pnpm dev
-
-   # Or start individually:
-   pnpm --filter @zaraidost/api dev        # API on http://localhost:4000
-   pnpm --filter @zaraidost/web dev        # Web on http://localhost:3000
-   pnpm --filter @zaraidost/mobile dev     # Mobile with Expo
-   ```
-
-### Development Workflow
-
-#### Running Tests
 ```bash
-# Run all tests
-pnpm test
+# Clone the repository
+git clone https://github.com/your-org/zarai-dost.git
+cd zarai-dost
 
-# Run tests for specific package
-pnpm --filter @zaraidost/api test
+# Install mobile app dependencies
+cd apps/mobile
+npm install
 
-# Run with coverage
-pnpm test:coverage
+# Start Expo development server
+npm start
+
+# Run on iOS simulator
+npm run ios
+
+# Run on Android emulator
+npm run android
+
+# Run on web (for testing)
+npm run web
 ```
 
-#### Code Quality
+### Running Tests
+
 ```bash
-# Lint all packages
-pnpm lint
-
-# Format code
-pnpm format
-
-# Type checking
-pnpm typecheck
-```
-
-#### Building for Production
-```bash
-# Build all packages
-pnpm build
-
-# Build specific app
-pnpm --filter @zaraidost/web build
-pnpm --filter @zaraidost/mobile build
-```
-
-## Deployment
-
-### AWS Deployment (Recommended)
-
-1. **Configure AWS credentials**
-   ```bash
-   aws configure
-   ```
-
-2. **Deploy infrastructure**
-   ```bash
-   cd infrastructure/cdk
-   pnpm install
-   pnpm cdk bootstrap  # First time only
-   pnpm cdk deploy --all
-   ```
-
-3. **Deploy applications**
-   ```bash
-   # API to Lambda
-   pnpm --filter @zaraidost/api deploy
-
-   # Web to S3 + CloudFront
-   pnpm --filter @zaraidost/web deploy
-
-   # Mobile to App Store / Play Store
-   # See apps/mobile/README.md for detailed instructions
-   ```
-
-### Environment-Specific Deployments
-```bash
-# Staging
-pnpm deploy:staging
-
-# Production
-pnpm deploy:prod
-```
-
-## Configuration
-
-### API Keys & Services
-
-| Service | Purpose | Required | Docs |
-|---------|---------|----------|------|
-| OpenAI | GPT models for advisory | Yes | [Link](https://platform.openai.com) |
-| Anthropic | Claude for advanced reasoning | Optional | [Link](https://console.anthropic.com) |
-| Google Cloud | Speech-to-Text, AutoML | Yes | [Link](https://cloud.google.com) |
-| IBM Weather | Weather forecasts | Yes | [Link](https://www.ibm.com/weather) |
-| AWS | Infrastructure & storage | Yes | [Link](https://aws.amazon.com) |
-
-### Feature Flags
-
-Configure features in `apps/api/config/features.json`:
-```json
-{
-  "offlineMode": true,
-  "voiceInput": true,
-  "communityNetwork": false,
-  "marketIntelligence": true
-}
-```
-
-## Contributing
-
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
-
-### Quick Start for Contributors
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Make your changes and add tests
-4. Ensure all tests pass: `pnpm test`
-5. Commit with conventional commits: `git commit -m "feat: add amazing feature"`
-6. Push to your fork and submit a Pull Request
-
-### Code Style
-- Follow the existing code style
-- Use TypeScript for new code
-- Write tests for new features
-- Update documentation as needed
-
-## Roadmap
-
-### Phase 1 (Months 1-3) - MVP
-- [x] Core offline functionality
-- [x] Basic crop disease detection (wheat, cotton)
-- [x] Weather integration
-- [ ] SMS/voice gateway
-- [ ] Beta testing with 100 farmers
-
-### Phase 2 (Months 4-6)
-- [ ] Multi-language voice support
-- [ ] Expand to 5 crops (rice, sugarcane, corn)
-- [ ] Market price predictions
-- [ ] Community network MVP
-- [ ] Scale to 10,000 users
-
-### Phase 3 (Months 7-12)
-- [ ] Full crop coverage (20+ crops)
-- [ ] Government scheme integration
-- [ ] Farmer marketplace
-- [ ] Advanced analytics dashboard
-- [ ] Regional expansion
-
-## Documentation
-
-- [Product Requirements Document (PRD)](docs/prd.md)
-- [Architecture Overview](docs/architecture.md)
-- [API Documentation](apps/api/README.md)
-- [Mobile App Guide](apps/mobile/README.md)
-- [User Stories](docs/stories/)
-- [Deployment Guide](docs/deployment.md)
-
-## Performance & Monitoring
-
-- **App Load Time**: <3s
-- **AI Inference**: <5s offline, <2s online
-- **Uptime Target**: 99.9%
-- **Scalability**: Tested for 100,000+ concurrent users
-
-Monitor via:
-- Grafana Dashboard: `https://monitoring.zaraidost.com`
-- AWS CloudWatch
-- Sentry for error tracking
-
-## Security & Compliance
-
-- **Encryption**: AES-256 for data at rest, TLS 1.3 in transit
-- **Authentication**: JWT with refresh tokens, OAuth 2.0
-- **Compliance**: GDPR, Pakistan Personal Data Protection Act
-- **AI Fairness**: Regular bias audits, synthetic data for underrepresented groups
-- **Privacy**: Anonymized data sharing, opt-in community features
-
-## Support & Community
-
-- **Documentation**: [docs.zaraidost.com](https://docs.zaraidost.com)
-- **Issues**: [GitHub Issues](https://github.com/yourusername/zaraiDost/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/zaraiDost/discussions)
-- **Email**: support@zaraidost.com
-- **Twitter**: [@ZaraiDost](https://twitter.com/zaraidost)
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- Built for the AI Wrapper Competition 2025
-- Inspired by the resilience of Pakistani farmers
-- Thanks to all contributors and beta testers
-- Weather data powered by IBM Weather API
-- AI infrastructure by OpenAI, Anthropic, and Google
-
-## Citation
-
-If you use Zarai Dost in your research or project, please cite:
-
-```bibtex
-@software{zaraidost2025,
-  title = {Zarai Dost: AI-Powered Agricultural Advisory Platform},
-  author = {Your Team},
-  year = {2025},
-  url = {https://github.com/yourusername/zaraiDost}
-}
+cd apps/mobile
+npm test              # Run all tests
+npm run test:watch    # Run tests in watch mode
 ```
 
 ---
 
-**Made with ❤️ for Pakistan's farmers**
+## 💻 Development
+
+### Project Structure
+
+```
+zarai-dost/
+├── apps/
+│   ├── mobile/              # React Native mobile app
+│   │   ├── src/
+│   │   │   ├── constants/   # App constants
+│   │   │   ├── database/    # SQLite layer
+│   │   │   │   ├── config/      # DB configuration
+│   │   │   │   ├── migrations/  # Schema migrations
+│   │   │   │   ├── models/      # Data models
+│   │   │   │   └── repositories/ # Data access layer
+│   │   │   ├── screens/     # UI screens
+│   │   │   ├── components/  # Reusable components
+│   │   │   ├── services/    # Business logic
+│   │   │   │   └── sync/        # Sync services
+│   │   │   ├── utils/       # Utilities
+│   │   │   └── __tests__/   # Unit tests
+│   │   ├── App.js           # App entry point
+│   │   └── package.json
+│   ├── api/                 # Backend API (planned)
+│   └── web/                 # Web dashboard (planned)
+├── packages/
+│   ├── ai-wrapper/          # AI model wrapper (planned)
+│   └── shared/              # Shared utilities (planned)
+├── infrastructure/
+│   └── cdk/                 # AWS CDK infrastructure (planned)
+├── ml/                      # ML models and training (planned)
+├── docs/
+│   ├── architecture/        # Architecture documentation
+│   ├── prd/                 # Product requirements
+│   └── stories/             # User stories (59 stories)
+├── .bmad-core/              # BMAD-METHOD agent configs
+├── PROGRESS.md              # Detailed progress tracking
+└── README.md                # This file
+```
+
+### Development Workflow
+
+1. **Story-Driven Development**: Each feature follows a user story
+2. **Test-Driven**: Write tests before/with implementation
+3. **Code Review**: All changes reviewed before merge
+4. **Documentation**: Update docs with each story completion
+
+### Code Standards
+
+- **Language**: JavaScript (React Native)
+- **Style**: ESLint + Prettier
+- **Testing**: Jest for unit/integration tests
+- **Database**: SQLite with migration versioning
+- **Commits**: Conventional commits (feat/fix/docs/etc.)
+
+---
+
+## 📚 Documentation
+
+### Available Documentation
+
+- **Product Requirements**: `/docs/prd/` - Detailed PRD with 7 epics
+- **Architecture**: `/docs/architecture/` - System architecture and decisions
+- **User Stories**: `/docs/stories/` - 59 user stories with acceptance criteria
+- **Progress Tracking**: `PROGRESS.md` - Detailed development progress
+
+### Key Documents
+
+- [Product Requirements Document](docs/prd.md)
+- [Architecture Document](docs/architecture.md)
+- [Progress & Status](PROGRESS.md)
+- [Story Index](docs/stories/)
+
+---
+
+## 🤝 Contributing
+
+### Development Team Roles (BMAD-METHOD)
+
+This project uses the BMAD-METHOD with AI agent roles:
+
+- **Product Manager (John)**: PRD creation, product strategy
+- **Architect (Winston)**: System design, technology decisions
+- **Scrum Master (Bob)**: Story creation, sprint planning
+- **Developer (James)**: Implementation, testing
+- **QA (Quinn)**: Quality assurance, testing strategy
+- **UX Expert (Sally)**: UI/UX design, accessibility
+
+### Getting Help
+
+- Review existing documentation in `/docs/`
+- Check user stories in `/docs/stories/`
+- See BMAD agents in `AGENTS.md`
+
+---
+
+## 📈 Metrics & Progress
+
+### Code Statistics (as of October 22, 2024)
+
+- **Stories Completed**: 1 / 22 (4.5%)
+- **Files Created**: 23
+- **Lines of Code**: ~3,500
+- **Test Coverage**: Basic (Story 1.1 only)
+- **Database Tables**: 5
+- **UI Screens**: 3
+
+### Sprint Velocity
+
+- **Story 1.1**: 1 day (complete with tests & docs)
+- **Story 1.2**: In progress (sync services)
+
+---
+
+## 📝 License
+
+MIT License - See LICENSE file for details
+
+---
+
+## 🙏 Acknowledgments
+
+- Built with React Native and Expo
+- Uses TensorFlow Lite for on-device AI
+- Inspired by offline-first agriculture platforms
+- Designed for smallholder farmers in Pakistan
+
+---
+
+## 📞 Contact
+
+- **Project Lead**: [Your Name]
+- **Email**: [your-email]
+- **Repository**: [GitHub URL]
+
+---
+
+**Last Updated**: October 22, 2024  
+**Version**: 0.1.0-alpha  
+**Status**: Active Development
