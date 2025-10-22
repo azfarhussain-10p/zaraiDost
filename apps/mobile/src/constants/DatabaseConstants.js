@@ -4,9 +4,10 @@
 // Story 1.4: Offline Image Processing Queue (added upload queue columns)
 // Story 1.5: Offline Weather and Advisory Cache (added WEATHER_CACHE, ADVISORIES_CACHE, CACHE_METADATA)
 // Story 1.6: Network Status and Sync Monitoring (added SYNC_HISTORY, DATA_USAGE, SYNC_PREFERENCES, SYNC_STATE_METADATA)
+// Story 3.1: Image Capture and Upload Interface (added HEALTH_CHECKS, extended IMAGES)
 
 export const DATABASE_NAME = 'zarai_dost.db';
-export const DATABASE_VERSION = 5; // Updated for Story 1.6
+export const DATABASE_VERSION = 6; // Updated for Story 3.1
 
 // Table Names
 export const TABLES = {
@@ -24,6 +25,7 @@ export const TABLES = {
   DATA_USAGE: 'data_usage', // Story 1.6
   SYNC_PREFERENCES: 'sync_preferences', // Story 1.6
   SYNC_STATE_METADATA: 'sync_state_metadata', // Story 1.6
+  HEALTH_CHECKS: 'health_checks', // Story 3.1
 };
 
 // Sync Status

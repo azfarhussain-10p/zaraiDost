@@ -16,6 +16,7 @@ let runMigration002 = null;
 let runMigration003 = null;
 let runMigration004 = null;
 let runMigration005 = null;
+let runMigration006 = null;
 
 // Only import SQLite and related modules on native platforms
 if (Platform.OS !== 'web') {
@@ -28,6 +29,7 @@ if (Platform.OS !== 'web') {
   runMigration003 = require('../migrations/003_image_upload_queue').runMigration003;
   runMigration004 = require('../migrations/004_weather_advisory_cache').runMigration004;
   runMigration005 = require('../migrations/005_sync_monitoring').runMigration005;
+  runMigration006 = require('../migrations/006_health_checks').runMigration006;
 }
 
 /**
@@ -123,6 +125,11 @@ const checkAndMigrate = async (db) => {
       // Run migration 005 (Story 1.6)
       if (currentVersion < 5 && DATABASE_VERSION >= 5) {
         await runMigration005(db);
+      }
+
+      // Run migration 006 (Story 3.1)
+      if (currentVersion < 6 && DATABASE_VERSION >= 6) {
+        await runMigration006(db);
       }
 
       // Update version
