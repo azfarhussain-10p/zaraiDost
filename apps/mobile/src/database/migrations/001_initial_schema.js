@@ -202,24 +202,21 @@ const createIndexes = async (db) => {
  */
 export const runMigrations = async (db, fromVersion, toVersion) => {
   console.log(`[Migration] Running migrations from version ${fromVersion} to ${toVersion}`);
-  
+
   // Version 0 → 1: Initial schema
   if (fromVersion < 1 && toVersion >= 1) {
     console.log('[Migration] Applying migration 001: Initial schema');
-    
+
     await createFarmersTable(db);
     await createFieldsTable(db);
     await createCropsTable(db);
     await createQueriesTable(db);
     await createImagesTable(db);
     await createIndexes(db);
-    
+
     console.log('[Migration] Migration 001 completed');
   }
-  
-  // Future migrations will go here
-  // if (fromVersion < 2 && toVersion >= 2) { ... }
-  
+
   console.log('[Migration] All migrations completed');
 };
 

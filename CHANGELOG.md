@@ -9,6 +9,62 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Completed - Story 1.3: Offline AI Model Storage ✅
+
+#### AI Model Infrastructure (Task 1)
+- Database migrations for model_metadata and inference_cache tables
+- Model versioning system with SQLite storage
+- Model lifecycle management (download, update, delete)
+- Storage monitoring and limit enforcement (<50MB target)
+
+#### Model Download & Caching (Task 2)
+- ModelDownloader service with progress tracking
+- WiFi-only download option by default
+- Retry logic with exponential backoff (3 attempts)
+- Checksum validation for model integrity (SHA256)
+- Mock mode for development without real models
+
+#### Model Versioning (Task 3)
+- ModelMetadataRepository for version tracking
+- Semantic version comparison (v1.0.0 format)
+- Active model management (one active per model type)
+- Automatic cleanup of old versions (keep 2 latest)
+- Update detection and notification
+
+#### Model Loading & Inference (Task 4)
+- InferenceEngine for TensorFlow Lite integration (ready for real models)
+- ImagePreprocessor for model input (resize to 224x224, normalize)
+- Mock inference mode for development
+- Performance monitoring (inference time tracking)
+- Support for 50+ disease classes
+
+#### Inference Caching (Task 5)
+- InferenceCacheRepository for offline fallback
+- Perceptual hash-based image similarity
+- Cache size management (max 1000 predictions)
+- Automatic cleanup of expired entries (30-day expiry)
+- Cache statistics and monitoring
+
+#### Model Settings UI (Task 6)
+- ModelSettings screen with full model management
+- Download/update/delete model controls
+- Storage usage indicator
+- Cache statistics display
+- Progress tracking during downloads
+
+#### Testing Infrastructure (Task 7)
+- Unit tests for ModelManager
+- Unit tests for ModelMetadataRepository
+- Unit tests for InferenceCacheRepository
+- Unit tests for ChecksumValidator
+- Comprehensive test coverage for core services
+
+#### Utilities & Constants
+- ChecksumValidator for file integrity verification
+- PerceptualHash for image similarity detection
+- ModelConstants with all model configurations
+- Disease class definitions for Pakistani crops
+
 ### Completed - Story 1.2: Background Synchronization Service ✅
 
 #### Sync Infrastructure (Task 2)

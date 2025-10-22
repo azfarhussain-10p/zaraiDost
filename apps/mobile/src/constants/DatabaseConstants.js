@@ -1,8 +1,9 @@
 // Database Constants for Zarai Dost
 // Story 1.1: Local Data Storage Foundation
+// Story 1.3: Offline AI Model Storage (added MODEL_METADATA, INFERENCE_CACHE)
 
 export const DATABASE_NAME = 'zarai_dost.db';
-export const DATABASE_VERSION = 1;
+export const DATABASE_VERSION = 2; // Updated for Story 1.3
 
 // Table Names
 export const TABLES = {
@@ -11,6 +12,8 @@ export const TABLES = {
   CROPS: 'crops',
   QUERIES: 'queries',
   IMAGES: 'images',
+  MODEL_METADATA: 'model_metadata', // Story 1.3
+  INFERENCE_CACHE: 'inference_cache', // Story 1.3
 };
 
 // Sync Status
