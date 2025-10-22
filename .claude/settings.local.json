@@ -13,7 +13,8 @@
       "Bash(npm test:*)",
       "Bash(npx eslint:*)",
       "Bash(xargs:*)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(echo:*)"
     ],
     "deny": [],
     "ask": []
