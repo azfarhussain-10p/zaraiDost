@@ -1,363 +1,277 @@
-# 📱 Zarai Dost Mobile App
+# Zarai Dost Mobile App 🌾
 
-> Offline-first mobile application for smallholder farmers in Pakistan
+A React Native mobile application for Pakistani farmers, providing agricultural guidance and crop management tools.
 
----
+## 📱 Platform Support
 
-## 📋 Overview
+- ✅ **iOS** - Full native support with SQLite
+- ✅ **Android** - Full native support with SQLite
+- ✅ **Web** - UI preview mode (limited functionality)
 
-The Zarai Dost mobile app is built with React Native and Expo, designed to work primarily offline with smart synchronization when connectivity is available.
-
-### Key Features
-
-#### Currently Implemented ✅
-- **Local Data Storage**: SQLite database with 5 tables
-- **Offline Viewing**: Farm dashboard, query history, crop details, sync settings
-- **Storage Management**: <100MB enforcement with automatic cleanup
-- **Network Monitoring**: WiFi/cellular detection with real-time updates
-- **Background Synchronization**: Priority-based sync with conflict resolution
-- **Sync UI**: Manual sync controls, status indicators, history tracking
-- **Conflict Resolution**: Last-write-wins with timestamp comparison
-- **Mock API Layer**: GraphQL client ready for backend integration
-
-#### Planned 📋
-- Voice input/output (Urdu, Punjabi, Sindhi)
-- Crop disease detection with on-device AI
-- Weather forecasting and irrigation recommendations
-- Market price intelligence
-
----
-
-## 🚀 Getting Started
+## 🚀 Quick Start
 
 ### Prerequisites
 
-- Node.js 18+ (v20.19.4+ recommended)
+- Node.js 18+ 
 - npm or yarn
-- Expo CLI
-- iOS Simulator (Mac) or Android Studio
+- Expo Go app (for device testing)
+- Android Studio (for Android emulator) - Optional
+- Xcode (for iOS simulator - Mac only) - Optional
 
 ### Installation
 
 ```bash
-# Navigate to mobile app
-cd apps/mobile
-
 # Install dependencies
 npm install
 
-# Start Expo development server
+# Start development server
 npm start
-
-# Run on iOS (Mac only)
-npm run ios
-
-# Run on Android
-npm run android
-
-# Run on web (testing only)
-npm run web
 ```
 
-### First Time Setup
+### Running on Devices
 
-The app will automatically:
-1. Initialize SQLite database on first launch
-2. Create initial schema (version 1)
-3. Set up storage management (<100MB)
+#### Option 1: Physical Device (Recommended) 📱
 
----
+1. Install **Expo Go** app:
+   - [Android - Google Play](https://play.google.com/store/apps/details?id=host.exp.exponent)
+   - [iOS - App Store](https://apps.apple.com/app/expo-go/id982107779)
 
-## 📁 Project Structure
+2. Make sure your phone and computer are on the **same WiFi network**
+
+3. Run the development server:
+   ```bash
+   npm start
+   ```
+
+4. **Scan the QR code** displayed in terminal with Expo Go app
+
+5. App loads with **full SQLite database** support! 🎉
+
+#### Option 2: Android Emulator 🤖
+
+```bash
+# Start Android emulator first, then:
+npm run android
+```
+
+#### Option 3: iOS Simulator 🍎 (Mac only)
+
+```bash
+npm run ios
+```
+
+#### Option 4: Web Browser 🌐
+
+```bash
+npm run web
+# Or press 'w' in the terminal where npm start is running
+```
+
+**Note:** Web version has limited functionality (no SQLite, file system, or native alerts).
+
+## 🌐 Web Platform Compatibility
+
+### What Works on Web:
+- ✅ UI rendering and navigation
+- ✅ Component interactions
+- ✅ Mock database operations (no persistence)
+- ✅ All React Native components via react-native-web
+
+### What Doesn't Work on Web:
+- ❌ SQLite database persistence (uses mock database)
+- ❌ File system access (expo-file-system)
+- ❌ Native alerts (Alert.alert)
+- ❌ Camera and location services
+- ❌ Background tasks
+
+### Platform-Specific Code
+
+The app automatically detects the platform and uses appropriate implementations:
+
+```javascript
+import { Platform } from 'react-native';
+
+if (Platform.OS === 'web') {
+  // Web-specific code (mock implementations)
+} else {
+  // Native code (iOS/Android with full features)
+}
+```
+
+**Modified files for web compatibility:**
+- `src/database/config/db.config.js` - Mock database for web
+- `src/utils/StorageManager.js` - Mock storage for web
+
+## 📂 Project Structure
 
 ```
 apps/mobile/
-├── App.js                      # Main app entry point
-├── package.json                # Dependencies
 ├── src/
-│   ├── constants/              # App constants
-│   │   └── DatabaseConstants.js
-│   ├── database/               # Data layer
-│   │   ├── config/
-│   │   │   └── db.config.js    # DB initialization
-│   │   ├── migrations/
-│   │   │   └── 001_initial_schema.js
-│   │   ├── models/             # Data models (5 models)
-│   │   │   ├── Farmer.js
-│   │   │   ├── Field.js
-│   │   │   ├── Crop.js
-│   │   │   ├── Query.js
-│   │   │   └── Image.js
-│   │   └── repositories/       # Data access layer
-│   │       ├── BaseRepository.js
-│   │       ├── FarmerRepository.js
-│   │       ├── FieldRepository.js
-│   │       ├── CropRepository.js
-│   │       ├── QueryRepository.js
-│   │       └── ImageRepository.js
-│   ├── screens/                # UI screens
-│   │   └── offline/
-│   │       ├── FarmDashboard.js
-│   │       ├── QueryHistory.js
-│   │       └── CropDetails.js
-│   ├── services/               # Business logic
-│   │   └── sync/               # Sync services (in progress)
-│   │       ├── NetworkMonitor.js
-│   │       └── SyncService.js
-│   ├── utils/                  # Utilities
-│   │   └── StorageManager.js
-│   └── __tests__/              # Tests
-│       └── database/
-│           └── FarmerRepository.test.js
-└── assets/                     # Images, fonts, etc.
+│   ├── screens/          # Screen components
+│   │   └── offline/      # Offline-capable screens
+│   ├── database/         # SQLite database layer
+│   │   ├── config/       # DB initialization & config
+│   │   ├── repositories/ # Data access layer
+│   │   └── migrations/   # Schema migrations
+│   ├── utils/            # Utility functions
+│   └── constants/        # App constants
+├── assets/               # Images, fonts, etc.
+├── App.js               # Root component
+├── index.js             # Entry point
+└── package.json         # Dependencies
+
 ```
 
----
+## 🛠️ Available Scripts
 
-## 🗃️ Database Schema
+```bash
+npm start              # Start Expo development server
+npm run android        # Run on Android emulator
+npm run ios           # Run on iOS simulator (Mac only)
+npm run web           # Run in web browser
+npm test              # Run tests
+npm run test:watch    # Run tests in watch mode
+```
 
-### Tables (Version 1)
+## 🗄️ Database
 
-#### farmers
-- `id` (TEXT PRIMARY KEY, UUID)
-- `name` (TEXT NOT NULL)
-- `phone` (TEXT)
-- `location` (TEXT)
-- `sync_status` (TEXT, pending/synced/conflict)
-- `last_synced_at` (INTEGER)
-- `created_at` (INTEGER)
-- `updated_at` (INTEGER)
+### SQLite (Native Platforms)
 
-#### fields
-- `id` (TEXT PRIMARY KEY, UUID)
-- `farmer_id` (TEXT, FK → farmers)
-- `name` (TEXT NOT NULL)
-- `acreage` (REAL)
-- `coordinates` (TEXT, JSON)
-- `sync_status` (TEXT)
-- `last_synced_at` (INTEGER)
-- `created_at` (INTEGER)
-- `updated_at` (INTEGER)
+The app uses **expo-sqlite** for local data persistence on iOS and Android.
 
-#### crops
-- `id` (TEXT PRIMARY KEY, UUID)
-- `field_id` (TEXT, FK → fields)
-- `crop_type` (TEXT NOT NULL)
-- `variety` (TEXT)
-- `planting_date` (INTEGER)
-- `expected_harvest` (INTEGER)
-- `status` (TEXT)
-- `sync_status` (TEXT)
-- `last_synced_at` (INTEGER)
-- `created_at` (INTEGER)
-- `updated_at` (INTEGER)
+**Database file location:**
+- iOS: `~/Library/Application Support/Expo/SQLite/zarai_dost.db`
+- Android: `/data/data/host.exp.exponent/databases/zarai_dost.db`
 
-#### queries
-- `id` (TEXT PRIMARY KEY, UUID)
-- `farmer_id` (TEXT, FK → farmers)
-- `query_text` (TEXT)
-- `query_type` (TEXT)
-- `response` (TEXT)
-- `sync_status` (TEXT)
-- `last_synced_at` (INTEGER)
-- `created_at` (INTEGER)
-- `updated_at` (INTEGER)
+**Current schema version:** 3
 
-#### images
-- `id` (TEXT PRIMARY KEY, UUID)
-- `crop_id` (TEXT, FK → crops)
-- `local_uri` (TEXT NOT NULL)
-- `remote_url` (TEXT)
-- `analysis_result` (TEXT, JSON)
-- `sync_status` (TEXT)
-- `last_synced_at` (INTEGER)
-- `created_at` (INTEGER)
-- `updated_at` (INTEGER)
+**Tables:**
+- `farmers` - Farmer profiles
+- `fields` - Agricultural fields
+- `crops` - Crop records
+- `queries` - AI query history
+- `images` - Image metadata and cache
+- `ai_models` - AI model metadata
+- `image_upload_queue` - Offline sync queue
 
-### Indexes
-- `idx_farmer_sync` on `farmers(sync_status, last_synced_at)`
-- `idx_field_farmer` on `fields(farmer_id)`
-- `idx_crop_field` on `crops(field_id, status)`
-- `idx_query_farmer` on `queries(farmer_id, created_at)`
-- `idx_image_crop` on `images(crop_id)`
+### Web Platform
 
----
+Uses a **mock database** that:
+- Returns empty arrays for queries
+- Accepts all writes (but doesn't persist)
+- Prevents crashes with stub implementations
 
 ## 🧪 Testing
 
-### Run Tests
-
+### Run All Tests
 ```bash
-# Run all tests
 npm test
-
-# Run tests in watch mode
-npm run test:watch
-
-# Run tests with coverage
-npm run test:coverage
 ```
 
-### Test Files
+### Watch Mode
+```bash
+npm run test:watch
+```
 
-- `src/__tests__/database/FarmerRepository.test.js` - Repository CRUD operations
+### Test Coverage
+```bash
+npm test -- --coverage
+```
 
-### Test Coverage Goal
-- Target: 80% coverage for core business logic
-- Current: Basic coverage (Story 1.1 only)
-
----
-
-## 📦 Dependencies
+## 📦 Key Dependencies
 
 ### Core
-- `react-native`: ^0.81.5
-- `expo`: ^52.0.17
-- `react`: ^18.3.1
+- `expo` - Development framework
+- `react-native` - Mobile framework
+- `expo-sqlite` - Database (native only)
+- `@react-navigation/native` - Navigation
 
-### Navigation
-- `@react-navigation/native`: ^6.1.18
-- `@react-navigation/native-stack`: ^6.11.0
+### Web Support
+- `react-native-web` - Web compatibility layer
+- `react-dom` - React DOM renderer
 
-### Database
-- `expo-sqlite`: ^15.0.3
-- `uuid`: ^11.0.3
-
-### Network & Sync (Story 1.2)
-- `@react-native-community/netinfo`: ^11.4.1
-- `expo-background-fetch`: ^14.0.7
-- `expo-task-manager`: ^14.0.8
-
-### Future Dependencies
-- `expo-camera`: For image capture (Story 3.1)
-- `@tensorflow/tfjs-react-native`: For on-device AI (Story 3.2)
-- `apollo-client`: For GraphQL sync (Story 1.2)
-- `expo-speech`: For text-to-speech (Story 2.3)
-
----
-
-## 🔧 Configuration
-
-### Database Configuration
-
-```javascript
-// src/database/config/db.config.js
-export const DATABASE_NAME = 'zaraiDost.db';
-export const DATABASE_VERSION = 1;
-```
-
-### Storage Limits
-
-```javascript
-// src/constants/DatabaseConstants.js
-export const STORAGE_LIMITS = {
-  MAX_DB_SIZE_MB: 100,
-  QUERY_RETENTION_DAYS: 90,
-  MAX_IMAGES_PER_CROP: 50,
-};
-```
-
----
+### Storage & Files
+- `expo-file-system` - File operations (native only)
+- `expo-image-picker` - Image selection
+- `expo-location` - GPS services
 
 ## 🐛 Troubleshooting
 
-### Database Issues
+### "Something went wrong" on Expo Go
 
-**Problem**: Database not initializing
-```bash
-# Clear app data and restart
-expo start -c
+**Solution:**
+1. Clear Expo Go cache (Profile → Clear cache)
+2. Restart Metro bundler: `npm start -- --clear`
+3. Try reloading 2-3 times in Expo Go
+
+### Buttons not working on web
+
+**This is expected!** The web version uses mock implementations. Buttons work but won't show visual changes because data isn't persisted. Check browser console for activity logs:
+
+```
+[FarmDashboard] 🌾 Creating sample field...
+[DB Mock] runAsync called
+[FarmDashboard] ✅ Sample field created successfully!
 ```
 
-**Problem**: Migration errors
+### Cannot find module errors
+
+**Solution:**
 ```bash
-# Check database version in logs
-# Uninstall and reinstall app to reset DB
+# Clear all caches and reinstall
+rm -rf node_modules
+npm install
+npm start -- --clear
 ```
 
-### Dependency Issues
+### Port 8081 already in use
 
-**Problem**: npm install fails
+**Solution:**
 ```bash
-# Use legacy peer deps flag
-npm install --legacy-peer-deps
+# Kill the process using port 8081
+# Windows:
+netstat -ano | findstr :8081
+taskkill /PID <PID> /F
+
+# Mac/Linux:
+lsof -ti:8081 | xargs kill -9
 ```
-
----
-
-## 📊 Performance
-
-### Current Metrics
-- App size: ~50MB (without AI models)
-- Database size: <10MB (test data)
-- Cold start: ~3s
-- Database queries: <50ms average
-
-### Storage Usage
-- SQLite database: <100MB limit enforced
-- Image cache: 50 images max per crop
-- Query history: 90-day retention
-
----
-
-## 🚀 Deployment
-
-### Build Commands
-
-```bash
-# Development build
-expo build:android -t apk
-expo build:ios -t simulator
-
-# Production build
-eas build --platform android --profile production
-eas build --platform ios --profile production
-```
-
-### Environment Variables
-
-```bash
-# .env (not in git)
-API_URL=https://api.zaraidost.com/graphql
-GOOGLE_CLOUD_API_KEY=your_key_here
-AWS_S3_BUCKET=zaraidost-images
-```
-
----
 
 ## 📝 Development Notes
 
-### Code Standards
-- **Language**: JavaScript (React Native)
-- **Style**: ESLint + Prettier
-- **Commits**: Conventional commits (feat/fix/docs)
-- **Testing**: Jest + React Native Testing Library
+### Adding New Features
 
-### Architecture Patterns
-- **Repository Pattern**: For data access abstraction
-- **Service Layer**: For business logic (sync, storage)
-- **Singleton Services**: NetworkMonitor, SyncService
-- **Functional Components**: React hooks for state
+1. **Check platform compatibility** - Use `Platform.OS` checks
+2. **Test on real devices** - Emulators don't catch all issues
+3. **Handle offline scenarios** - App should work without internet
+4. **Update migrations** - Increment `DATABASE_VERSION` for schema changes
 
-### Known Issues
-1. Story 1.2 sync uses mock GraphQL API (backend not implemented yet)
-   - Real GraphQL endpoints will replace mock when backend is ready
-   - All GraphQL mutations and queries are defined and ready
-2. Background sync requires platform permissions setup
-3. Additional integration tests needed for full sync flow
+### Code Style
+
+- Use **functional components** with hooks
+- Follow **React Native best practices**
+- Add **PropTypes** or TypeScript for type safety
+- Write **tests** for business logic
+- Document **platform-specific** code clearly
+
+## 🤝 Contributing
+
+1. Create a feature branch
+2. Make changes with tests
+3. Test on both platforms (iOS & Android)
+4. Submit pull request
+
+## 📄 License
+
+[Add license information]
+
+## 🆘 Support
+
+For issues or questions:
+- Check the [Troubleshooting](#troubleshooting) section
+- Review console logs for detailed error messages
+- Open an issue with reproduction steps
 
 ---
 
-## 📚 Additional Resources
-
-- [Expo Documentation](https://docs.expo.dev/)
-- [React Native Documentation](https://reactnative.dev/)
-- [SQLite Documentation](https://www.sqlite.org/docs.html)
-- [Project Architecture](../../docs/architecture.md)
-- [User Stories](../../docs/stories/)
-
----
-
-**Version**: 0.1.0  
-**Last Updated**: October 22, 2024  
-**Status**: Active Development
+**Built with ❤️ for Pakistani farmers** 🇵🇰🌾

@@ -1,391 +1,260 @@
-# 🌾 Zarai Dost (زرعی دوست) - Smart Agriculture Platform
+# Zarai Dost (زرعی دوست) 🌾
 
-> **"Your Farming Friend"** - An offline-first, AI-powered agriculture assistant for smallholder farmers in Pakistan
+**Agricultural Companion for Pakistani Farmers**
 
-[![Status](https://img.shields.io/badge/Status-Active%20Development-green)]()
-[![Stories Complete](https://img.shields.io/badge/Stories-2%2F22%20Complete-yellow)]()
-[![License](https://img.shields.io/badge/License-MIT-blue)]()
+An AI-powered mobile application providing agricultural guidance, crop management, and offline support for farmers in Pakistan.
 
----
+## 🎯 Project Overview
 
-## 📋 Table of Contents
+Zarai Dost is a comprehensive farming assistant that works offline-first, helping farmers with:
+- Crop disease identification through image recognition
+- Agricultural guidance and best practices
+- Field and crop management
+- Weather and soil information
+- Offline data persistence
 
-- [Overview](#overview)
-- [Project Status](#project-status)
-- [Features](#features)
-- [Architecture](#architecture)
-- [Getting Started](#getting-started)
-- [Development](#development)
-- [Project Structure](#project-structure)
-- [Documentation](#documentation)
-- [Contributing](#contributing)
+## 📁 Project Structure
 
----
+```
+zaraiDost/
+├── apps/
+│   └── mobile/              # React Native/Expo mobile app
+│       ├── src/
+│       │   ├── screens/     # UI screens
+│       │   ├── database/    # SQLite data layer
+│       │   ├── utils/       # Utility functions
+│       │   └── constants/   # App constants
+│       └── package.json
+│
+├── docs/                    # Project documentation
+│   ├── prd/                 # Product requirements
+│   ├── architecture/        # Technical architecture
+│   ├── stories/             # Development stories
+│   └── project/             # Project-specific docs
+│
+└── .bmad-core/             # BMAD development workflow
+```
 
-## 🎯 Overview
-
-Zarai Dost is a comprehensive smart agriculture platform designed specifically for smallholder farmers in Pakistan. The platform provides:
-
-- **Offline-First Operation**: Works without internet connectivity
-- **Multilingual Support**: Urdu, Punjabi, Sindhi with voice interaction
-- **AI-Powered Insights**: Crop disease detection, irrigation recommendations, market intelligence
-- **Voice Accessibility**: Voice commands for low-literacy users
-- **Climate Intelligence**: Weather forecasting and climate-smart recommendations
-
-### Target Users
-- Smallholder farmers in rural Pakistan
-- Limited internet connectivity (2G/3G in remote areas)
-- Low digital literacy
-- Urdu/regional language speakers
-
----
-
-## 📊 Project Status
-
-### ✅ Completed (18.2% - 4/22 stories)
-
-#### Epic 1: Offline-First Intelligence
-- ✅ **Story 1.4: Offline Image Processing Queue** - COMPLETE
-  - Camera integration with image capture and gallery selection
-  - Complete capture-to-analysis pipeline (<5s processing)
-  - GPS metadata extraction and timestamp tracking
-  - Image compression and thumbnail generation (80% quality, 200x200px)
-  - Intelligent upload queue with prioritization (recent, high-confidence first)
-  - S3 upload with pre-signed URLs and progress tracking
-  - Automatic storage cleanup (50 image limit, delete oldest synced)
-  - Batch uploads (10 parallel on WiFi, 3 on cellular)
-  - Background upload task (15-minute intervals)
-  - Failed upload retry with exponential backoff (max 3 attempts)
-  - UI components (ImageThumbnail, UploadProgressBar, SyncStatusBadge)
-
-- ✅ **Story 1.3: Offline AI Model Storage** - COMPLETE
-  - TensorFlow Lite infrastructure (ready for real models)
-  - Model download with progress tracking and WiFi-only option
-  - Model versioning and update management
-  - SHA256 checksum validation for integrity
-  - Inference caching with perceptual hashing
-  - ModelSettings UI for full model management
-  - Support for 50+ disease classes
-  - Mock mode for development without trained models
-
-- ✅ **Story 1.2: Background Synchronization Service** - COMPLETE
-  - Network monitoring (WiFi/cellular detection, real-time updates)
-  - Priority-based sync orchestration (manual > auto > background)
-  - Exponential backoff retry (1s→60s max)
-  - Conflict resolution (last-write-wins strategy)
-  - Sync UI components (SyncButton, SyncStatusIndicator)
-  - Background sync (15min intervals)
-  - Mock GraphQL API layer
-
-- ✅ **Story 1.1: Local Data Storage Foundation** - COMPLETE
-  - SQLite database with 5 tables (farmers, fields, crops, queries, images)
-  - Repository pattern (Base + 5 specialized repositories)
-  - Storage Manager (<100MB limit enforcement)
-  - 3 offline screens (Farm Dashboard, Query History, Crop Details)
-  - Migration system with version management
-
-### 🚧 In Progress
-
-**None** - Story 1.4 complete! Ready for Story 1.5 or 3.1.
-
-### 📋 Remaining Stories (18/22)
-
-#### Epic 1: Offline-First Intelligence (2 stories remaining)
-- [ ] 1.5: Offline Weather and Advisory Cache
-- [ ] 1.6: Network Status and Sync Monitoring
-
-#### Epic 2: Voice-Powered Accessibility (7 stories)
-- [ ] 2.1: Voice Input Foundation (Urdu)
-- [ ] 2.2: Multi-Language Voice Support
-- [ ] 2.3: Voice Response Output
-- [ ] 2.4: Contextual Voice Commands
-- [ ] 2.5: Offline Voice Basics
-- [ ] 2.6: Voice Clarifications and Error Handling
-- [ ] 2.7: Voice Accessibility Settings
-
-#### Epic 3: Crop Health Monitoring (9 stories - ALL APPROVED)
-- [ ] 3.1: Image Capture and Upload Interface
-- [ ] 3.2: On-Device Disease Detection Model
-- [ ] 3.3: Cloud-Based Enhanced Analysis
-- [ ] 3.4: Treatment Recommendations Engine
-- [ ] 3.5: Local Supplier Integration
-- [ ] 3.6: Disease History and Tracking
-- [ ] 3.7: Multi-Crop and Field Management
-- [ ] 3.8: Multilingual Disease Information
-- [ ] 3.9: Confidence and Accuracy Feedback Loop
-
-**Note**: Epics 4-7 (37 additional stories) are documented in PRD but not yet in development sprint.
-
----
-
-## ✨ Features
-
-### Currently Implemented ✅
-
-#### Local Data Storage
-- Offline SQLite database with full CRUD operations
-- 5 core entities: Farmers, Fields, Crops, Queries, Images
-- Foreign key relationships and indexes
-- Automatic data cleanup (90-day query retention, 50-image limit)
-- Storage monitoring (<100MB enforcement)
-
-#### Synchronization
-- Background sync service with priority queue
-- Network monitoring (WiFi/cellular detection)
-- Auto-sync on connectivity restoration
-- Manual sync controls
-- Exponential backoff retry (6 attempts, 1s→60s)
-- Conflict resolution (last-write-wins)
-- Sync history and statistics
-- WiFi-only sync option
-
-#### Mobile UI
-- Farm Dashboard with field/crop management
-- Query History with search and filtering
-- Crop Details with image gallery
-- Sync Settings screen with full controls
-- Sync status indicator (real-time)
-- Manual sync button
-- Offline mode indicator
-- Empty state handling
-- Real-time statistics
-
-#### Data Management
-- Repository pattern for data access
-- Transaction support for multi-table operations
-- Sync status tracking (pending/synced/conflict/failed)
-- Timestamp-based conflict detection
-- Pending sync counter
-- Event-driven sync updates
-
-### Planned Features 🚀
-
-- AI-powered crop disease detection (TensorFlow Lite)
-- Voice input/output in Urdu and regional languages
-- Weather forecasting and irrigation recommendations
-- Market price intelligence
-- Climate-smart crop advisory
-- Community knowledge sharing
-
----
-
-## 🏗️ Architecture
-
-### Technology Stack
-
-#### Mobile App
-- **Framework**: React Native with Expo
-- **Navigation**: React Navigation
-- **Local Database**: SQLite (expo-sqlite)
-- **State Management**: React Hooks
-- **Network**: NetInfo for connectivity detection
-- **Testing**: Jest + React Native Testing Library
-
-#### Backend (Planned)
-- **API**: Node.js + Express + GraphQL
-- **Database**: PostgreSQL
-- **Storage**: AWS S3
-- **AI/ML**: TensorFlow Serving
-- **Cache**: Redis
-
-#### Infrastructure (Planned)
-- **Cloud**: AWS CDK
-- **Deployment**: AWS ECS/Fargate
-- **CI/CD**: GitHub Actions
-
-### Architecture Principles
-
-1. **Offline-First**: All core functionality works without internet
-2. **Progressive Enhancement**: Online features enhance but don't block
-3. **Data Sovereignty**: User data stored locally first
-4. **Sync When Possible**: Background sync when connectivity available
-5. **Modular Design**: Microservices for scalability
-
----
-
-## 🚀 Getting Started
+## 🚀 Quick Start
 
 ### Prerequisites
 
-- Node.js 18+ (v20.19.4+ recommended)
-- npm or yarn
-- Expo CLI
-- iOS Simulator (Mac) or Android Studio
+- **Node.js** 18+ 
+- **npm** or **yarn**
+- **Git**
+- **Expo Go** app (for device testing)
 
 ### Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/zarai-dost.git
-cd zarai-dost
+git clone <repository-url>
+cd zaraiDost
 
 # Install mobile app dependencies
 cd apps/mobile
 npm install
 
-# Start Expo development server
+# Start development server
 npm start
+```
 
-# Run on iOS simulator
-npm run ios
+### Running the App
 
-# Run on Android emulator
+See [apps/mobile/README.md](apps/mobile/README.md) for detailed instructions.
+
+**Quick options:**
+```bash
+cd apps/mobile
+
+# Physical device (recommended)
+npm start
+# Then scan QR code with Expo Go app
+
+# Android emulator
 npm run android
 
-# Run on web (for testing)
+# iOS simulator (Mac only)
+npm run ios
+
+# Web browser (limited functionality)
 npm run web
 ```
 
-### Running Tests
+## 📱 Platform Support
+
+| Platform | Status | Features |
+|----------|--------|----------|
+| **iOS** | ✅ Full Support | All features including offline SQLite |
+| **Android** | ✅ Full Support | All features including offline SQLite |
+| **Web** | ✅ UI Preview | Limited - UI testing only, no data persistence |
+
+## 🏗️ Technology Stack
+
+### Mobile App
+- **Framework:** React Native with Expo SDK 52
+- **Language:** JavaScript (ES6+)
+- **Database:** SQLite (expo-sqlite)
+- **Navigation:** React Navigation
+- **State:** React Hooks
+- **Testing:** Jest + React Native Testing Library
+
+### Future Services
+- **Backend:** AWS Lambda + API Gateway (planned)
+- **AI/ML:** TensorFlow Lite for on-device inference
+- **Cloud:** AWS S3, DynamoDB (planned)
+
+## 📖 Documentation
+
+- **[Mobile App README](apps/mobile/README.md)** - Detailed mobile app documentation
+- **[Architecture](docs/architecture/)** - Technical architecture and design
+- **[PRD](docs/prd/)** - Product requirements and specifications
+- **[Stories](docs/stories/)** - Development stories and tasks
+
+## 🔧 Development Workflow
+
+This project uses **BMAD-METHOD** for development workflow:
+
+- **PM Agent** - Product management and PRD creation
+- **Architect Agent** - System design and architecture
+- **SM Agent** - Story creation and sprint planning
+- **Dev Agent** - Implementation
+- **QA Agent** - Testing and quality assurance
+
+See [AGENTS.md](AGENTS.md) for agent usage details.
+
+## 🌐 Web Platform Notes
+
+The mobile app can run in web browsers for UI testing and development, with the following limitations:
+
+### Web Compatibility Work Done:
+1. **Platform-specific imports** for native modules
+2. **Mock database** implementation for SQLite
+3. **Mock storage** implementation for file system
+4. **Platform detection** throughout the codebase
+
+### Files Modified for Web Support:
+- `apps/mobile/src/database/config/db.config.js`
+- `apps/mobile/src/utils/StorageManager.js`
+- `apps/mobile/package.json` (added react-native-web dependencies)
+
+**Note:** Web version is for **development and UI preview only**. Full functionality requires iOS or Android.
+
+## 🧪 Testing
 
 ```bash
 cd apps/mobile
-npm test              # Run all tests
-npm run test:watch    # Run tests in watch mode
+
+# Run all tests
+npm test
+
+# Watch mode
+npm run test:watch
+
+# Coverage report
+npm test -- --coverage
 ```
 
----
+## 📦 Dependencies
 
-## 💻 Development
+### Major Version Compatibility (Updated October 2025)
 
-### Project Structure
+**Resolved dependency conflicts:**
+- React Native: `0.76.3` (updated from 0.81.5)
+- React: `18.3.1`
+- React DOM: `18.3.1` (for web support)
+- Expo SDK: `52.0.17`
+- React Native Web: `~0.19.13`
 
-```
-zarai-dost/
-├── apps/
-│   ├── mobile/              # React Native mobile app
-│   │   ├── src/
-│   │   │   ├── constants/   # App constants
-│   │   │   ├── database/    # SQLite layer
-│   │   │   │   ├── config/      # DB configuration
-│   │   │   │   ├── migrations/  # Schema migrations
-│   │   │   │   ├── models/      # Data models
-│   │   │   │   └── repositories/ # Data access layer
-│   │   │   ├── screens/     # UI screens
-│   │   │   ├── components/  # Reusable components
-│   │   │   ├── services/    # Business logic
-│   │   │   │   └── sync/        # Sync services
-│   │   │   ├── utils/       # Utilities
-│   │   │   └── __tests__/   # Unit tests
-│   │   ├── App.js           # App entry point
-│   │   └── package.json
-│   ├── api/                 # Backend API (planned)
-│   └── web/                 # Web dashboard (planned)
-├── packages/
-│   ├── ai-wrapper/          # AI model wrapper (planned)
-│   └── shared/              # Shared utilities (planned)
-├── infrastructure/
-│   └── cdk/                 # AWS CDK infrastructure (planned)
-├── ml/                      # ML models and training (planned)
-├── docs/
-│   ├── architecture/        # Architecture documentation
-│   ├── prd/                 # Product requirements
-│   └── stories/             # User stories (59 stories)
-├── .bmad-core/              # BMAD-METHOD agent configs
-├── PROGRESS.md              # Detailed progress tracking
-└── README.md                # This file
+All dependencies are now compatible with Expo SDK 52.
+
+## 🐛 Common Issues & Solutions
+
+### Issue: Expo server error "package.json does not exist"
+
+**Solution:** Always run Expo commands from the mobile app directory:
+```bash
+cd apps/mobile
+npm start
 ```
 
-### Development Workflow
+### Issue: Dependency conflicts
 
-1. **Story-Driven Development**: Each feature follows a user story
-2. **Test-Driven**: Write tests before/with implementation
-3. **Code Review**: All changes reviewed before merge
-4. **Documentation**: Update docs with each story completion
+**Solution:** Use Expo's fix command:
+```bash
+cd apps/mobile
+npx expo install --fix
+```
 
-### Code Standards
+### Issue: Web version buttons not working
 
-- **Language**: JavaScript (React Native)
-- **Style**: ESLint + Prettier
-- **Testing**: Jest for unit/integration tests
-- **Database**: SQLite with migration versioning
-- **Commits**: Conventional commits (feat/fix/docs/etc.)
+**Expected behavior!** Web uses mock database. Check browser console for activity logs. Use iOS/Android for full functionality.
 
----
+### Issue: "Something went wrong" on Expo Go
 
-## 📚 Documentation
+**Solution:**
+```bash
+# 1. Clear Expo Go cache on device
+# 2. Restart with clean cache
+cd apps/mobile
+npm start -- --clear
 
-### Available Documentation
+# 3. Try LAN mode if tunnel fails
+npm start -- --lan
+```
 
-- **Product Requirements**: `/docs/prd/` - Detailed PRD with 7 epics
-- **Architecture**: `/docs/architecture/` - System architecture and decisions
-- **User Stories**: `/docs/stories/` - 59 user stories with acceptance criteria
-- **Progress Tracking**: `PROGRESS.md` - Detailed development progress
+## 🔐 Environment Variables
 
-### Key Documents
+Create `.env` files as needed (they're gitignored):
 
-- [Product Requirements Document](docs/prd.md)
-- [Architecture Document](docs/architecture.md)
-- [Progress & Status](PROGRESS.md)
-- [Story Index](docs/stories/)
-
----
+```bash
+# apps/mobile/.env.example
+EXPO_PUBLIC_API_URL=https://api.zaraidost.com
+EXPO_PUBLIC_ENV=development
+```
 
 ## 🤝 Contributing
 
-### Development Team Roles (BMAD-METHOD)
+1. Create a feature branch from `main`
+2. Follow the existing code style
+3. Write tests for new features
+4. Test on both iOS and Android
+5. Update documentation
+6. Submit pull request
 
-This project uses the BMAD-METHOD with AI agent roles:
+## 📄 License
 
-- **Product Manager (John)**: PRD creation, product strategy
-- **Architect (Winston)**: System design, technology decisions
-- **Scrum Master (Bob)**: Story creation, sprint planning
-- **Developer (James)**: Implementation, testing
-- **QA (Quinn)**: Quality assurance, testing strategy
-- **UX Expert (Sally)**: UI/UX design, accessibility
+[Add license information]
 
-### Getting Help
+## 👥 Team
 
-- Review existing documentation in `/docs/`
-- Check user stories in `/docs/stories/`
-- See BMAD agents in `AGENTS.md`
+[Add team information]
 
----
+## 📞 Support
 
-## 📈 Metrics & Progress
-
-### Code Statistics (as of October 22, 2024)
-
-- **Stories Completed**: 3 / 22 (13.6%)
-- **Files Created**: 50
-- **Lines of Code**: ~8,000
-- **Test Coverage**: ModelManager, ModelMetadataRepository, InferenceCacheRepository, ChecksumValidator, NetworkMonitor, ConflictResolver, FarmerRepository
-- **Database Tables**: 7
-- **UI Screens**: 5
-- **Services**: 12
-- **UI Components**: 2
-
-### Sprint Velocity
-
-- **Story 1.1**: 1 day (complete with tests & docs)
-- **Story 1.2**: 1 day (complete with tests & docs)
-- **Story 1.3**: 1 day (complete with tests & docs)
+For issues or questions:
+- Check [Troubleshooting sections](#common-issues--solutions)
+- Review [mobile app README](apps/mobile/README.md)
+- Open an issue with detailed reproduction steps
 
 ---
 
-## 📝 License
-
-MIT License - See LICENSE file for details
+**Made with ❤️ for Pakistani farmers** 🇵🇰
 
 ---
 
-## 🙏 Acknowledgments
+## 🎉 Recent Updates
 
-- Built with React Native and Expo
-- Uses TensorFlow Lite for on-device AI
-- Inspired by offline-first agriculture platforms
-- Designed for smallholder farmers in Pakistan
+### October 2025 - Web Platform Compatibility
 
----
+- ✅ Fixed React Native version conflicts (0.81.5 → 0.76.3)
+- ✅ Added full web platform support with react-native-web
+- ✅ Implemented platform-specific code for native modules
+- ✅ Created mock database and storage for web preview
+- ✅ Updated all dependencies to Expo SDK 52 compatibility
 
-## 📞 Contact
+### Current Focus
 
-- **Project Lead**: [Your Name]
-- **Email**: [your-email]
-- **Repository**: [GitHub URL]
-
----
-
-**Last Updated**: October 22, 2024  
-**Version**: 0.1.0-alpha  
-**Status**: Active Development
+- Epic 1.1: Local Data Storage Foundation ✅
+- Epic 1.2-1.4: Offline capabilities (in progress)
+- Future: Backend integration and AI features

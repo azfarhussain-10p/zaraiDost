@@ -80,6 +80,7 @@ export default function FarmDashboard({ navigation }) {
 
   const createSampleField = async () => {
     try {
+      console.log('[FarmDashboard] 🌾 Creating sample field...');
       await FieldRepository.create({
         farmer_id: farmer.id,
         name: `Field ${fields.length + 1}`,
@@ -89,19 +90,23 @@ export default function FarmDashboard({ navigation }) {
       });
       
       await loadDashboardData();
+      console.log('[FarmDashboard] ✅ Sample field created successfully!');
       Alert.alert('Success', 'Sample field created');
     } catch (error) {
+      console.error('[FarmDashboard] ❌ Failed to create field:', error);
       Alert.alert('Error', 'Failed to create field');
     }
   };
 
   const createSampleCrop = async () => {
     if (fields.length === 0) {
+      console.log('[FarmDashboard] ⚠️ Please create a field first');
       Alert.alert('Notice', 'Please create a field first');
       return;
     }
 
     try {
+      console.log('[FarmDashboard] 🌱 Creating sample crop...');
       await CropRepository.create({
         field_id: fields[0].id,
         crop_type: 'wheat',
@@ -110,8 +115,10 @@ export default function FarmDashboard({ navigation }) {
       });
       
       await loadDashboardData();
+      console.log('[FarmDashboard] ✅ Sample crop created successfully!');
       Alert.alert('Success', 'Sample crop created');
     } catch (error) {
+      console.error('[FarmDashboard] ❌ Failed to create crop:', error);
       Alert.alert('Error', 'Failed to create crop');
     }
   };

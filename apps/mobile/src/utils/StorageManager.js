@@ -2,11 +2,17 @@
 // Story 1.1: Local Data Storage Foundation
 // Implements: Task 5 (Storage management and cleanup)
 
-import * as FileSystem from 'expo-file-system';
+import { Platform } from 'react-native';
 import { getDatabase } from '../database/config/db.config';
 import QueryRepository from '../database/repositories/QueryRepository';
 import ImageRepository from '../database/repositories/ImageRepository';
 import { STORAGE_LIMITS, DATABASE_NAME } from '../constants/DatabaseConstants';
+
+// Platform-specific FileSystem import
+let FileSystem = null;
+if (Platform.OS !== 'web') {
+  FileSystem = require('expo-file-system');
+}
 
 /**
  * Monitor and manage storage usage
@@ -16,8 +22,14 @@ export class StorageManager {
   /**
    * Get database file size in MB
    * Implements: Task 5.1 (Storage monitoring utility)
+   * Note: Returns 0 on web platform
    */
   static async getDatabaseSize() {
+    // Web platform - return mock value
+    if (Platform.OS === 'web') {
+      return 0;
+    }
+    
     try {
       const dbPath = `${FileSystem.documentDirectory}SQLite/${DATABASE_NAME}`;
       const fileInfo = await FileSystem.getInfoAsync(dbPath);
@@ -37,10 +49,22 @@ export class StorageManager {
 
   /**
    * Get total app storage usage in MB
+   * Note: Returns mock data on web platform
    */
   static async getTotalStorage() {
     try {
       const dbSize = await this.getDatabaseSize();
+      
+      // Web platform - return mock storage data
+      if (Platform.OS === 'web') {
+        return {
+          totalMB: 0,
+          databaseMB: 0,
+          otherMB: 0,
+          limitMB: STORAGE_LIMITS.MAX_TOTAL_MB,
+          percentageUsed: 0,
+        };
+      }
       
       // Get total directory size (includes images, cache, etc.)
       const totalSize = await this.getDirectorySize(FileSystem.documentDirectory);
@@ -66,8 +90,14 @@ export class StorageManager {
 
   /**
    * Get directory size recursively
+   * Note: Returns 0 on web platform
    */
   static async getDirectorySize(dirPath) {
+    // Web platform - return mock value
+    if (Platform.OS === 'web') {
+      return 0;
+    }
+    
     try {
       let totalSize = 0;
       const items = await FileSystem.readDirectoryAsync(dirPath);

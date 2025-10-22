@@ -2,21 +2,61 @@
 // Story 1.1: Local Data Storage Foundation
 // Implements: Task 1.2-1.4 (Database initialization, singleton pattern, error handling)
 
-import * as SQLite from 'expo-sqlite';
-import { DATABASE_NAME, DATABASE_VERSION } from '../../constants/DatabaseConstants';
-import { runMigrations as runMigrations001 } from '../migrations/001_initial_schema';
-import { runMigration002 } from '../migrations/002_ai_models';
-import { runMigration003 } from '../migrations/003_image_upload_queue';
+import { Platform } from 'react-native';
 
 // Singleton instance
 let databaseInstance = null;
 
+// Platform-specific SQLite import - only load on native platforms
+let SQLite = null;
+let DATABASE_NAME = null;
+let DATABASE_VERSION = null;
+let runMigrations001 = null;
+let runMigration002 = null;
+let runMigration003 = null;
+let runMigration004 = null;
+
+// Only import SQLite and related modules on native platforms
+if (Platform.OS !== 'web') {
+  SQLite = require('expo-sqlite');
+  const dbConstants = require('../../constants/DatabaseConstants');
+  DATABASE_NAME = dbConstants.DATABASE_NAME;
+  DATABASE_VERSION = dbConstants.DATABASE_VERSION;
+  runMigrations001 = require('../migrations/001_initial_schema').runMigrations;
+  runMigration002 = require('../migrations/002_ai_models').runMigration002;
+  runMigration003 = require('../migrations/003_image_upload_queue').runMigration003;
+  runMigration004 = require('../migrations/004_weather_advisory_cache').runMigration004;
+}
+
 /**
  * Initialize database connection (Singleton pattern)
  * Implements AC1: App uses SQLite for local data persistence
+ * Note: On web platform, this is a no-op and returns a mock database
  */
+/**
+ * Create a mock database for web platform
+ * Provides stub methods that return empty data
+ */
+const createMockDatabase = () => ({
+  platform: 'web',
+  mock: true,
+  // Stub methods to prevent crashes
+  execAsync: async () => { console.log('[DB Mock] execAsync called'); },
+  getFirstAsync: async () => { console.log('[DB Mock] getFirstAsync called'); return null; },
+  getAllAsync: async () => { console.log('[DB Mock] getAllAsync called'); return []; },
+  runAsync: async () => { console.log('[DB Mock] runAsync called'); return { lastInsertRowId: 0, changes: 0 }; },
+  closeAsync: async () => { console.log('[DB Mock] closeAsync called'); },
+});
+
 export const initDatabase = async () => {
   try {
+    // Skip database initialization on web
+    if (Platform.OS === 'web') {
+      console.log('[DB] Web platform detected - using mock database');
+      databaseInstance = createMockDatabase();
+      return databaseInstance;
+    }
+
     if (databaseInstance) {
       console.log('[DB] Database already initialized');
       return databaseInstance;
@@ -73,6 +113,11 @@ const checkAndMigrate = async (db) => {
         await runMigration003(db);
       }
 
+      // Run migration 004 (Story 1.5)
+      if (currentVersion < 4 && DATABASE_VERSION >= 4) {
+        await runMigration004(db);
+      }
+
       // Update version
       await db.execAsync(`PRAGMA user_version = ${DATABASE_VERSION};`);
       console.log('[DB] Migrations completed successfully');
@@ -87,19 +132,28 @@ const checkAndMigrate = async (db) => {
 
 /**
  * Get database instance (must call initDatabase first)
+ * Note: On web platform, returns a mock database object
  */
 export const getDatabase = () => {
   if (!databaseInstance) {
     throw new Error('Database not initialized. Call initDatabase() first.');
   }
+  // No warning needed - mock database is expected on web
   return databaseInstance;
 };
 
 /**
  * Close database connection
  * Used for cleanup during app shutdown or testing
+ * Note: On web platform, this is a no-op
  */
 export const closeDatabase = async () => {
+  if (Platform.OS === 'web') {
+    console.log('[DB] Web platform - no database to close');
+    databaseInstance = null;
+    return;
+  }
+  
   if (databaseInstance) {
     try {
       await databaseInstance.closeAsync();
@@ -115,8 +169,14 @@ export const closeDatabase = async () => {
 /**
  * Reset database (for development/testing only)
  * WARNING: This will delete all data!
+ * Note: On web platform, this is a no-op
  */
 export const resetDatabase = async () => {
+  if (Platform.OS === 'web') {
+    console.log('[DB] Web platform - no database to reset');
+    return;
+  }
+  
   try {
     console.log('[DB] Resetting database...');
     
@@ -140,8 +200,15 @@ export const resetDatabase = async () => {
 /**
  * Execute a transaction
  * Implements: Task 3.7 (Transaction support for multi-table operations)
+ * Note: On web platform, this is a no-op and just executes the callback
  */
 export const executeTransaction = async (callback) => {
+  if (Platform.OS === 'web') {
+    // Silent on web - just execute callback with mock db
+    await callback(databaseInstance);
+    return;
+  }
+  
   const db = getDatabase();
   
   try {

@@ -1,19 +1,19 @@
 # 📊 Zarai Dost - Development Progress
 
-**Last Updated**: October 22, 2024
+**Last Updated**: October 23, 2024
 **Current Sprint**: Epic 1 - Offline-First Intelligence
-**Overall Progress**: 18.2% (4/22 stories complete)
+**Overall Progress**: 22.7% (5/22 stories complete)
 
 ---
 
 ## 📈 Overall Progress
 
 ```
-Epic 1: Offline-First Intelligence    [============>-------] 66.7% (4/6 stories)
+Epic 1: Offline-First Intelligence    [===============>----] 83.3% (5/6 stories)
 Epic 2: Voice-Powered Accessibility    [--------------------]  0.0% (0/7 stories)
 Epic 3: Crop Health Monitoring         [--------------------]  0.0% (0/9 stories)
 
-Total Sprint Stories:                  [===>----------------] 18.2% (4/22 stories)
+Total Sprint Stories:                  [====>---------------] 22.7% (5/22 stories)
 ```
 
 ---
@@ -184,6 +184,8 @@ Total Sprint Stories:                  [===>----------------] 18.2% (4/22 storie
 **Completed**: October 22, 2024
 **Developer**: Claude Sonnet 4.5 (Dev Agent)
 
+**Summary**: [See STORY_1.4_SUMMARY.md](./STORY_1.4_SUMMARY.md)
+
 #### Acceptance Criteria Met
 - ✅ AC1: Images stored locally with metadata (timestamp, location, crop type)
 - ✅ AC2: On-device AI processing completes within 5 seconds
@@ -230,9 +232,71 @@ Total Sprint Stories:                  [===>----------------] 18.2% (4/22 storie
 
 ---
 
+### Story 1.5: Offline Weather and Advisory Cache
+**Status**: ✅ COMPLETE
+**Completed**: October 23, 2024
+**Developer**: Claude Sonnet 4.5 (Dev Agent)
+
+#### Acceptance Criteria Met
+- ✅ AC1: Last 7 days of weather data cached locally
+- ✅ AC2: Last received advisories (irrigation, market, climate) cached
+- ✅ AC3: Cache refreshes automatically when online
+- ✅ AC4: Stale data clearly marked with last-updated timestamp
+- ✅ AC5: User can view cached vs live data indicator
+- ✅ AC6: Cache size limited to 10MB
+
+#### Deliverables
+**Database Layer** (1 migration, 2 models, 2 repositories):
+- Migration 004: weather_cache, advisories_cache, cache_metadata tables
+- WeatherCache model with helper methods
+- AdvisoryCache model with validity checking
+- WeatherCacheRepository with 7-day retention
+- AdvisoryCacheRepository with priority-based retention
+
+**Services** (5 files):
+- WeatherCacheService - Weather data caching and retrieval
+- AdvisoryCacheService - Advisory data caching (irrigation/market/climate)
+- CacheRefreshOrchestrator - Coordinated refresh with prioritization
+- StalenessDetector - Data freshness analysis (5 levels)
+- CacheSizeMonitor - Storage monitoring and 10MB enforcement
+
+**UI Components** (3 files):
+- DataFreshnessIndicator - Staleness badges (green/yellow/red)
+- CachedDataBanner - Offline mode banner
+- LastUpdatedLabel - Timestamp display
+
+**Screens** (2 files):
+- WeatherForecast - 7-day forecast with pull-to-refresh
+- AdvisoriesHome - Categorized advisories with tabs
+
+**Constants** (1 file):
+- CacheConstants - Size limits, staleness thresholds, refresh config
+
+**Tests** (4 files):
+- WeatherCacheService unit tests (6 suites)
+- AdvisoryCacheService unit tests (7 suites)
+- StalenessDetector unit tests (10 suites)
+- CacheSizeMonitor unit tests (11 suites)
+
+**Total**: 20 new files, ~3,200 lines of code
+
+#### Technical Highlights
+- 5-level staleness detection (Fresh → Critical)
+- Automatic refresh: connectivity restored + every 6 hours
+- Prioritized refresh order: Weather → Climate → Market → Irrigation
+- Smart retention: 7-day weather, 5 advisories per type
+- 10MB cache limit with automatic cleanup
+- Integration with NetworkMonitor from Story 1.2
+- Color-coded UI indicators
+- Comprehensive test coverage (34+ tests)
+
+**Full Summary**: [See STORY_1.5_SUMMARY.md](./STORY_1.5_SUMMARY.md)
+
+---
+
 ## 🔄 In Progress Stories
 
-**None** - Story 1.4 complete! Ready for Story 1.5 or 3.1.
+**None** - Story 1.5 complete! Ready for Story 1.6.
 
 ---
 
@@ -249,22 +313,9 @@ Total Sprint Stories:                  [===>----------------] 18.2% (4/22 storie
 
 ---
 
-## 📋 Remaining Stories (18/22)
+## 📋 Remaining Stories (17/22)
 
-### Epic 1: Offline-First Intelligence (2 stories remaining)
-
-#### 1.5: Offline Weather and Advisory Cache
-**Status**: 📋 NOT STARTED  
-**Estimated Complexity**: Medium  
-**Dependencies**: Weather API integration
-
-**Scope**:
-- Cache weather forecasts (7-day)
-- Agricultural advisory caching
-- Automatic refresh when online
-- Offline fallback data
-
----
+### Epic 1: Offline-First Intelligence (1 story remaining)
 
 #### 1.6: Network Status and Sync Monitoring
 **Status**: 📋 NOT STARTED  
@@ -497,17 +548,17 @@ Total Sprint Stories:                  [===>----------------] 18.2% (4/22 storie
 
 | Metric | Count |
 |--------|-------|
-| **Stories Completed** | 4 / 22 |
+| **Stories Completed** | 5 / 22 |
 | **Stories In Progress** | 0 |
-| **Stories Remaining** | 18 |
-| **Total Files Created** | 61 |
-| **Lines of Code** | ~10,800 |
-| **Database Tables** | 7 (farmers, fields, crops, queries, images, model_metadata, inference_cache) |
-| **UI Screens** | 5 (Dashboard, Query History, Crop Details, Sync Settings, Model Settings) |
-| **Repositories** | 7 + Base |
-| **Services** | 17 (Network, Sync, Conflict, Queue, Background, GraphQL, API, ModelManager, ModelDownloader, InferenceEngine, ImagePreprocessor, InferenceCache, ImageCapture, ImageUploadQueue, S3Upload, ImageStorageManager, MetadataExtractor) |
-| **UI Components** | 5 (SyncButton, SyncStatusIndicator, ImageThumbnail, UploadProgressBar, SyncStatusBadge) |
-| **Test Files** | 7 |
+| **Stories Remaining** | 17 |
+| **Total Files Created** | 81 |
+| **Lines of Code** | ~14,000 |
+| **Database Tables** | 10 (farmers, fields, crops, queries, images, model_metadata, inference_cache, weather_cache, advisories_cache, cache_metadata) |
+| **UI Screens** | 7 (Dashboard, Query History, Crop Details, Sync Settings, Model Settings, Weather Forecast, Advisories Home) |
+| **Repositories** | 9 + Base |
+| **Services** | 22 (Network, Sync, Conflict, Queue, Background, GraphQL, API, ModelManager, ModelDownloader, InferenceEngine, ImagePreprocessor, InferenceCache, ImageCapture, ImageUploadQueue, S3Upload, ImageStorageManager, MetadataExtractor, WeatherCache, AdvisoryCache, CacheRefreshOrchestrator, StalenessDetector, CacheSizeMonitor) |
+| **UI Components** | 8 (SyncButton, SyncStatusIndicator, ImageThumbnail, UploadProgressBar, SyncStatusBadge, DataFreshnessIndicator, CachedDataBanner, LastUpdatedLabel) |
+| **Test Files** | 11 |
 
 ### Sprint Velocity
 
@@ -517,31 +568,32 @@ Total Sprint Stories:                  [===>----------------] 18.2% (4/22 storie
 | 1.2   | 1 day    | 1 day  | 0%       |
 | 1.3   | 1 day    | 1 day  | 0%       |
 | 1.4   | 1 day    | 1 day  | 0%       |
+| 1.5   | 1 day    | 1 day  | 0%       |
 
 ### Epic Progress
 
 | Epic | Stories | Complete | In Progress | Remaining | % Done |
 |------|---------|----------|-------------|-----------|--------|
-| Epic 1 | 6  | 4  | 0  | 2  | 66.7% |
+| Epic 1 | 6  | 5  | 0  | 1  | 83.3% |
 | Epic 2 | 7  | 0  | 0  | 7  | 0%    |
 | Epic 3 | 9  | 0  | 0  | 9  | 0%    |
-| **Total** | **22** | **4** | **0** | **18** | **18.2%** |
+| **Total** | **22** | **5** | **0** | **17** | **22.7%** |
 
 ---
 
 ## 🎯 Next Steps
 
 ### Immediate (This Week)
-1. ✅ Complete Story 1.2 (Background Sync)
-2. ✅ Finalize Story 1.2 documentation
-3. ✅ Update all progress docs
-4. ✅ Push code to repository
+1. ✅ Complete Story 1.5 (Offline Weather and Advisory Cache)
+2. ✅ Update all progress docs
+3. 📋 Story 1.6: Network Status and Sync Monitoring (final Epic 1 story)
+4. 📋 Push code to repository
 
 ### Short Term (Next 2 Weeks)
-1. Story 1.3: Offline AI Model Storage
-2. Story 1.4: Offline Image Processing Queue
-3. Story 3.1: Image Capture Interface (high priority)
-4. Story 3.2: On-Device Disease Detection (core feature)
+1. Story 1.6: Network Status and Sync Monitoring
+2. Story 3.1: Image Capture Interface (high priority)
+3. Story 3.2: On-Device Disease Detection (core feature)
+4. Story 2.1: Voice Input Foundation (Urdu)
 
 ### Medium Term (Next Month)
 1. Complete Epic 1 (Stories 1.5, 1.6)
@@ -599,7 +651,10 @@ Total Sprint Stories:                  [===>----------------] 18.2% (4/22 storie
 ### Lessons Learned
 1. **Story 1.1**: Foundation is critical - took time but enables fast progress
 2. **Story 1.2**: Mock APIs enable frontend development without backend
-3. **Testing**: Early test setup pays dividends later
+3. **Story 1.3**: Model architecture can be built before training data
+4. **Story 1.4**: Queue prioritization improves user experience
+5. **Story 1.5**: Staleness detection enhances offline-first experience
+6. **Testing**: Early test setup pays dividends later
 
 ---
 
@@ -629,7 +684,7 @@ Total Sprint Stories:                  [===>----------------] 18.2% (4/22 storie
 
 ---
 
-**Document Maintained By**: Development Team  
-**Update Frequency**: After each story completion  
-**Last Reviewed**: October 22, 2024
+**Document Maintained By**: Development Team
+**Update Frequency**: After each story completion
+**Last Reviewed**: October 23, 2024
 
