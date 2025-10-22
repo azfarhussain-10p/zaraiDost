@@ -3,9 +3,10 @@
 // Story 1.3: Offline AI Model Storage (added MODEL_METADATA, INFERENCE_CACHE)
 // Story 1.4: Offline Image Processing Queue (added upload queue columns)
 // Story 1.5: Offline Weather and Advisory Cache (added WEATHER_CACHE, ADVISORIES_CACHE, CACHE_METADATA)
+// Story 1.6: Network Status and Sync Monitoring (added SYNC_HISTORY, DATA_USAGE, SYNC_PREFERENCES, SYNC_STATE_METADATA)
 
 export const DATABASE_NAME = 'zarai_dost.db';
-export const DATABASE_VERSION = 4; // Updated for Story 1.5
+export const DATABASE_VERSION = 5; // Updated for Story 1.6
 
 // Table Names
 export const TABLES = {
@@ -19,6 +20,10 @@ export const TABLES = {
   WEATHER_CACHE: 'weather_cache', // Story 1.5
   ADVISORIES_CACHE: 'advisories_cache', // Story 1.5
   CACHE_METADATA: 'cache_metadata', // Story 1.5
+  SYNC_HISTORY: 'sync_history', // Story 1.6
+  DATA_USAGE: 'data_usage', // Story 1.6
+  SYNC_PREFERENCES: 'sync_preferences', // Story 1.6
+  SYNC_STATE_METADATA: 'sync_state_metadata', // Story 1.6
 };
 
 // Sync Status
