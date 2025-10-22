@@ -6,6 +6,7 @@ import * as SQLite from 'expo-sqlite';
 import { DATABASE_NAME, DATABASE_VERSION } from '../../constants/DatabaseConstants';
 import { runMigrations as runMigrations001 } from '../migrations/001_initial_schema';
 import { runMigration002 } from '../migrations/002_ai_models';
+import { runMigration003 } from '../migrations/003_image_upload_queue';
 
 // Singleton instance
 let databaseInstance = null;
@@ -65,6 +66,11 @@ const checkAndMigrate = async (db) => {
       // Run migration 002 (Story 1.3)
       if (currentVersion < 2 && DATABASE_VERSION >= 2) {
         await runMigration002(db);
+      }
+
+      // Run migration 003 (Story 1.4)
+      if (currentVersion < 3 && DATABASE_VERSION >= 3) {
+        await runMigration003(db);
       }
 
       // Update version
