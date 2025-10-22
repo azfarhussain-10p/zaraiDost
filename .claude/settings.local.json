@@ -8,7 +8,12 @@
       "mcp__serena__list_dir",
       "Bash(ls:*)",
       "Bash(awk:*)",
-      "mcp__serena__check_onboarding_performed"
+      "mcp__serena__check_onboarding_performed",
+      "Bash(git log:*)",
+      "Bash(npm test:*)",
+      "Bash(npx eslint:*)",
+      "Bash(xargs:*)",
+      "Bash(mkdir:*)"
     ],
     "deny": [],
     "ask": []

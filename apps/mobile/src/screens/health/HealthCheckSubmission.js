@@ -20,6 +20,7 @@ import HealthCheckRepository from '../../database/repositories/HealthCheckReposi
 import ImageRepository from '../../database/repositories/ImageRepository';
 import LocationService from '../../services/image/LocationService';
 import { HEALTH_CHECK_STATUS } from '../../constants/ImageQualityConstants';
+import DiseaseDetectionEngine from '../../services/ai/DiseaseDetectionEngine';
 
 /**
  * HealthCheckSubmission Screen
@@ -115,24 +116,39 @@ const HealthCheckSubmission = ({ navigation, route }) => {
       // Success!
       setIsSubmitting(false);
 
+      // Trigger on-device disease detection (Story 3.2)
+      const imageUris = images.map((img) => img.uri);
+      const imageIds = images.map((_, index) => `img_${healthCheck.id}_${index}`);
+
+      // Navigate to disease detection results
       Alert.alert(
         'Health Check Submitted!',
-        'Your images are being analyzed. You will receive results shortly.',
+        'Images saved. Analyzing for diseases...',
         [
           {
             text: 'View Results',
             onPress: () => {
-              // Navigate to results screen (Story 3.2)
-              navigation.navigate('FarmDashboard', {
+              // Navigate to disease detection results (Story 3.2)
+              navigation.navigate('DiseaseResult', {
+                imageUris,
+                imageIds,
                 healthCheckId: healthCheck.id,
+                language: 'ur', // TODO: Get from user preferences
               });
+            },
+          },
+          {
+            text: 'Later',
+            style: 'cancel',
+            onPress: () => {
+              navigation.navigate('FarmDashboard');
             },
           },
         ]
       );
 
-      // TODO: Trigger on-device analysis (Story 3.2 integration)
       // TODO: Queue images for S3 upload when online (Story 1.4 integration)
+      // TODO: Save detection results to health_checks table when complete
     } catch (error) {
       console.error('[HealthCheckSubmission] Submission failed:', error);
       setIsSubmitting(false);

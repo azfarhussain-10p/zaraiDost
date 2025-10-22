@@ -5,9 +5,11 @@
 // Story 1.5: Offline Weather and Advisory Cache (added WEATHER_CACHE, ADVISORIES_CACHE, CACHE_METADATA)
 // Story 1.6: Network Status and Sync Monitoring (added SYNC_HISTORY, DATA_USAGE, SYNC_PREFERENCES, SYNC_STATE_METADATA)
 // Story 3.1: Image Capture and Upload Interface (added HEALTH_CHECKS, extended IMAGES)
+// Story 3.2: On-Device Disease Detection Model (added DISEASES, extended HEALTH_CHECKS/IMAGES)
+// Story 3.3: Cloud-Based Enhanced Analysis (added CLOUD_ANALYSIS_QUEUE, extended HEALTH_CHECKS)
 
 export const DATABASE_NAME = 'zarai_dost.db';
-export const DATABASE_VERSION = 6; // Updated for Story 3.1
+export const DATABASE_VERSION = 8; // Updated for Story 3.3
 
 // Table Names
 export const TABLES = {
@@ -26,6 +28,8 @@ export const TABLES = {
   SYNC_PREFERENCES: 'sync_preferences', // Story 1.6
   SYNC_STATE_METADATA: 'sync_state_metadata', // Story 1.6
   HEALTH_CHECKS: 'health_checks', // Story 3.1
+  DISEASES: 'diseases', // Story 3.2
+  CLOUD_ANALYSIS_QUEUE: 'cloud_analysis_queue', // Story 3.3
 };
 
 // Sync Status
