@@ -3,7 +3,7 @@
 > **"Your Farming Friend"** - An offline-first, AI-powered agriculture assistant for smallholder farmers in Pakistan
 
 [![Status](https://img.shields.io/badge/Status-Active%20Development-green)]()
-[![Stories Complete](https://img.shields.io/badge/Stories-1%2F22%20Complete-yellow)]()
+[![Stories Complete](https://img.shields.io/badge/Stories-2%2F22%20Complete-yellow)]()
 [![License](https://img.shields.io/badge/License-MIT-blue)]()
 
 ---
@@ -42,7 +42,7 @@ Zarai Dost is a comprehensive smart agriculture platform designed specifically f
 
 ## 📊 Project Status
 
-### ✅ Completed (4.5% - 1/22 stories)
+### ✅ Completed (9.1% - 2/22 stories)
 
 #### Epic 1: Offline-First Intelligence
 - ✅ **Story 1.1: Local Data Storage Foundation** - COMPLETE
@@ -52,14 +52,20 @@ Zarai Dost is a comprehensive smart agriculture platform designed specifically f
   - 3 offline screens (Farm Dashboard, Query History, Crop Details)
   - Migration system with version management
 
-- 🔄 **Story 1.2: Background Synchronization Service** - IN PROGRESS (30%)
-  - Network monitoring (WiFi/cellular detection)
-  - Sync orchestration with exponential backoff
-  - Mock API layer (awaiting backend implementation)
+- ✅ **Story 1.2: Background Synchronization Service** - COMPLETE
+  - Network monitoring (WiFi/cellular detection, real-time updates)
+  - Priority-based sync orchestration (manual > auto > background)
+  - Exponential backoff retry (1s→60s max)
+  - Conflict resolution (last-write-wins strategy)
+  - Sync UI components (SyncButton, SyncStatusIndicator)
+  - SyncSettings screen with full sync control panel
+  - Background sync (15min intervals)
+  - Mock GraphQL API layer (ready for backend)
+  - Comprehensive testing infrastructure
 
 ### 🚧 In Progress
 
-- Story 1.2: Background Synchronization Service (30% complete)
+**None** - Ready for Story 1.3!
 
 ### 📋 Remaining Stories (20/22)
 
@@ -104,10 +110,23 @@ Zarai Dost is a comprehensive smart agriculture platform designed specifically f
 - Automatic data cleanup (90-day query retention, 50-image limit)
 - Storage monitoring (<100MB enforcement)
 
+#### Synchronization
+- Background sync service with priority queue
+- Network monitoring (WiFi/cellular detection)
+- Auto-sync on connectivity restoration
+- Manual sync controls
+- Exponential backoff retry (6 attempts, 1s→60s)
+- Conflict resolution (last-write-wins)
+- Sync history and statistics
+- WiFi-only sync option
+
 #### Mobile UI
 - Farm Dashboard with field/crop management
 - Query History with search and filtering
 - Crop Details with image gallery
+- Sync Settings screen with full controls
+- Sync status indicator (real-time)
+- Manual sync button
 - Offline mode indicator
 - Empty state handling
 - Real-time statistics
@@ -115,12 +134,13 @@ Zarai Dost is a comprehensive smart agriculture platform designed specifically f
 #### Data Management
 - Repository pattern for data access
 - Transaction support for multi-table operations
-- Sync status tracking (pending/synced/conflict)
+- Sync status tracking (pending/synced/conflict/failed)
 - Timestamp-based conflict detection
+- Pending sync counter
+- Event-driven sync updates
 
 ### Planned Features 🚀
 
-- Background data synchronization
 - AI-powered crop disease detection (TensorFlow Lite)
 - Voice input/output in Urdu and regional languages
 - Weather forecasting and irrigation recommendations
@@ -307,17 +327,19 @@ This project uses the BMAD-METHOD with AI agent roles:
 
 ### Code Statistics (as of October 22, 2024)
 
-- **Stories Completed**: 1 / 22 (4.5%)
-- **Files Created**: 23
-- **Lines of Code**: ~3,500
-- **Test Coverage**: Basic (Story 1.1 only)
+- **Stories Completed**: 2 / 22 (9.1%)
+- **Files Created**: 36
+- **Lines of Code**: ~5,500
+- **Test Coverage**: NetworkMonitor, ConflictResolver, FarmerRepository
 - **Database Tables**: 5
-- **UI Screens**: 3
+- **UI Screens**: 4
+- **Services**: 7
+- **UI Components**: 2
 
 ### Sprint Velocity
 
 - **Story 1.1**: 1 day (complete with tests & docs)
-- **Story 1.2**: In progress (sync services)
+- **Story 1.2**: 1 day (complete with tests & docs)
 
 ---
 

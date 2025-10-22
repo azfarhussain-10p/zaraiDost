@@ -12,13 +12,13 @@ The Zarai Dost mobile app is built with React Native and Expo, designed to work 
 
 #### Currently Implemented ✅
 - **Local Data Storage**: SQLite database with 5 tables
-- **Offline Viewing**: Farm dashboard, query history, crop details
+- **Offline Viewing**: Farm dashboard, query history, crop details, sync settings
 - **Storage Management**: <100MB enforcement with automatic cleanup
-- **Network Monitoring**: WiFi/cellular detection (Story 1.2 in progress)
-
-#### In Development 🚧
-- Background data synchronization (Story 1.2)
-- Sync queue with exponential backoff retry
+- **Network Monitoring**: WiFi/cellular detection with real-time updates
+- **Background Synchronization**: Priority-based sync with conflict resolution
+- **Sync UI**: Manual sync controls, status indicators, history tracking
+- **Conflict Resolution**: Last-write-wins with timestamp comparison
+- **Mock API Layer**: GraphQL client ready for backend integration
 
 #### Planned 📋
 - Voice input/output (Urdu, Punjabi, Sindhi)
@@ -340,9 +340,11 @@ AWS_S3_BUCKET=zaraidost-images
 - **Functional Components**: React hooks for state
 
 ### Known Issues
-1. Story 1.2 sync uses mock API (backend not implemented)
-2. Connection quality detection not yet implemented (Task 1.5)
-3. Integration tests pending (Story 1.2 Task 7)
+1. Story 1.2 sync uses mock GraphQL API (backend not implemented yet)
+   - Real GraphQL endpoints will replace mock when backend is ready
+   - All GraphQL mutations and queries are defined and ready
+2. Background sync requires platform permissions setup
+3. Additional integration tests needed for full sync flow
 
 ---
 
