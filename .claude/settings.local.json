@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(md-tree explode:*)",
+      "Bash(shard-doc:*)",
+      "Bash(test:*)",
+      "Bash(npm install:*)",
+      "mcp__serena__list_dir",
+      "Bash(ls:*)",
+      "Bash(awk:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

@@ -1,0 +1,3 @@
+# System Overview
+Zarai Dost's architecture supports offline-first, multimodal AI for agricultural advisory, optimized for rural deployment. It uses a wrapper layer to abstract models (GPT/Claude/Gemini/Llama), ensuring extensibility. Components: Frontends (mobile/web), backend services, AI orchestration, data handling. Drivers: Intermittent connectivity, security for farm data, low-end device optimization.
+

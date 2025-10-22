@@ -1,0 +1,590 @@
+# ===================================
+# Zarai Dost - Comprehensive .gitignore
+# Node.js + React Native + Python ML + AWS + Turborepo
+# ===================================
+
+# ===================================
+# BMAD (local only) - Keep existing
+# ===================================
+.bmad-core/
+.bmad-*/
+
+# ===================================
+# Operating System Files
+# ===================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ===================================
+# IDEs and Editors
+# ===================================
+
+# VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# JetBrains (WebStorm, PyCharm, IntelliJ)
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+.idea_modules/
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# Vim
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+Session.vim
+Sessionx.vim
+.netrwhist
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# ===================================
+# Node.js / JavaScript / TypeScript
+# ===================================
+
+# Dependencies
+node_modules/
+jspm_packages/
+bower_components/
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.nuxt/
+.cache/
+.parcel-cache/
+.vuepress/dist/
+.docusaurus/
+.serverless/
+.fusebox/
+
+# Turborepo
+.turbo/
+
+# Testing
+coverage/
+*.lcov
+.nyc_output/
+*.tsbuildinfo
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Lock files (keep pnpm-lock.yaml for consistency)
+# package-lock.json
+# yarn.lock
+# npm-shrinkwrap.json
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.staging
+.env.production
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+lib-cov/
+
+# TypeScript
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
+# Optional npm cache
+.npm/
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Yarn
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# ===================================
+# React Native / Expo / Mobile
+# ===================================
+
+# Expo
+.expo/
+.expo-shared/
+web-build/
+
+# React Native
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+
+# Android
+apps/mobile/android/app/build/
+apps/mobile/android/app/release/
+apps/mobile/android/.gradle/
+apps/mobile/android/build/
+apps/mobile/android/local.properties
+apps/mobile/android/app/google-services.json
+apps/mobile/android/app/debug/
+apps/mobile/android/captures/
+apps/mobile/android/.externalNativeBuild/
+apps/mobile/android/.cxx/
+
+# iOS
+apps/mobile/ios/Pods/
+apps/mobile/ios/build/
+apps/mobile/ios/*.xcworkspace
+apps/mobile/ios/*.xcuserdata/
+apps/mobile/ios/*.xcuserdatad/
+apps/mobile/ios/Podfile.lock
+apps/mobile/ios/.xcode.env.local
+apps/mobile/ios/GoogleService-Info.plist
+
+# Metro bundler
+.metro-health-check*
+
+# EAS
+.eas/
+eas.json.bak
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output/
+
+# ===================================
+# Python / Machine Learning
+# ===================================
+
+# Virtual environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.Python
+.venv/
+ml/venv/
+ml/.venv/
+
+# Python compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Distribution / packaging
+ml/build/
+ml/dist/
+ml/wheels/
+ml/*.egg-info/
+ml/.eggs/
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit test / coverage
+.pytest_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+.hypothesis/
+*.cover
+*.py,cover
+.cache
+nosetests.xml
+coverage.xml
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+!ml/notebooks/examples/*.ipynb
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Spyder
+.spyderproject
+.spyproject
+
+# Rope
+.ropeproject
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre
+.pyre/
+
+# ML Model files (large binary files)
+ml/models/*.h5
+ml/models/*.pb
+ml/models/*.pth
+ml/models/*.onnx
+ml/models/*.tflite
+ml/models/*.weights
+ml/models/checkpoints/
+ml/models/saved_models/
+!ml/models/.gitkeep
+
+# Training data (too large for git)
+ml/data/raw/
+ml/data/processed/
+ml/data/interim/
+ml/datasets/
+!ml/data/.gitkeep
+
+# ML experiment tracking
+mlruns/
+wandb/
+.mlflow/
+runs/
+experiments/
+
+# TensorFlow
+*.tfrecord
+*.tfevents.*
+tensorboard_logs/
+
+# PyTorch
+lightning_logs/
+*.pt
+*.pth
+
+# Model weights and artifacts
+*.pkl
+*.pickle
+*.joblib
+*.model
+*.bin
+
+# Large data files
+*.csv
+*.parquet
+*.feather
+*.h5
+*.hdf5
+!ml/data/samples/*.csv
+
+# ===================================
+# AWS / Infrastructure / CDK
+# ===================================
+
+# CDK
+infrastructure/cdk/cdk.out/
+infrastructure/cdk/.cdk.staging/
+infrastructure/cdk/cdk.context.json
+infrastructure/cdk/*.js
+infrastructure/cdk/*.d.ts
+!infrastructure/cdk/bin/*.js
+!infrastructure/cdk/lib/*.js
+
+# Terraform
+infrastructure/terraform/.terraform/
+infrastructure/terraform/*.tfstate
+infrastructure/terraform/*.tfstate.backup
+infrastructure/terraform/*.tfvars
+infrastructure/terraform/.terraform.lock.hcl
+infrastructure/terraform/crash.log
+infrastructure/terraform/override.tf
+infrastructure/terraform/override.tf.json
+infrastructure/terraform/*_override.tf
+infrastructure/terraform/*_override.tf.json
+infrastructure/terraform/.terraformrc
+infrastructure/terraform/terraform.rc
+
+# AWS SAM
+.aws-sam/
+samconfig.toml
+
+# Serverless Framework
+.serverless/
+serverless.yml.bak
+
+# CloudFormation
+*.template.json
+cloudformation/*.json
+!cloudformation/examples/*.json
+
+# Lambda layers
+layers/
+*.zip
+
+# ===================================
+# Database & Cache
+# ===================================
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+*.db-shm
+*.db-wal
+
+# PostgreSQL
+*.pgdata
+*.pgpass
+
+# Redis
+dump.rdb
+appendonly.aof
+
+# ===================================
+# Logs & Monitoring
+# ===================================
+
+# Application logs
+logs/
+*.log
+combined.log
+error.log
+access.log
+
+# Monitoring & profiling
+.clinic/
+*.cpuprofile
+*.heapprofile
+*.heapsnapshot
+
+# Sentry
+.sentryclirc
+
+# ===================================
+# Build & Deployment Artifacts
+# ===================================
+
+# Build outputs
+*.tgz
+*.tar.gz
+*.zip
+*.rar
+*.7z
+
+# Compiled binaries
+*.exe
+*.dll
+*.dylib
+*.so
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# CI/CD
+.github/workflows/secrets/
+
+# ===================================
+# API Keys & Secrets
+# ===================================
+
+# API credentials
+.secrets/
+secrets.json
+credentials.json
+service-account.json
+firebase-adminsdk.json
+google-cloud-key.json
+
+# AWS credentials
+.aws/credentials
+.aws/config
+
+# Environment configs
+.envrc
+.env.vault
+
+# ===================================
+# Documentation & Generated Files
+# ===================================
+
+# Auto-generated docs
+docs/api/generated/
+docs/.vuepress/.cache/
+docs/.vuepress/dist/
+
+# Storybook
+storybook-static/
+
+# ===================================
+# Temporary Files
+# ===================================
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+*.swp
+*.swo
+*.bak
+*.backup
+*.orig
+
+# Advisory/audit files
+npm-audit.json
+yarn-audit.json
+advisory-*.json
+
+# ===================================
+# Media & Assets (if large)
+# ===================================
+
+# Uncomment if you want to exclude large media files
+# *.mp4
+# *.mov
+# *.avi
+# *.mkv
+# *.wav
+# *.mp3
+
+# Generated images (from ML inference)
+apps/mobile/assets/cache/
+apps/web/public/uploads/temp/
+uploads/temp/
+
+# ===================================
+# Testing & Quality
+# ===================================
+
+# E2E test artifacts
+cypress/videos/
+cypress/screenshots/
+playwright-report/
+test-results/
+
+# Performance testing
+.lighthouseci/
+
+# ===================================
+# Miscellaneous
+# ===================================
+
+# Backup files
+*~
+*.orig
+*.rej
+
+# Package manager directories
+.pnp/
+.pnp.js
+
+# Debug
+debug.log
+
+# Editor directories
+.cursor/
+.windsurf/
+!.claude/
+
+# Local configuration
+.local/
+
+# Workspace files
+*.code-workspace
