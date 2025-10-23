@@ -7,7 +7,99 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
+### Planned
+- Backend API integration for cloud features
+- Real TensorFlow Lite disease detection model deployment
+- Treatment recommendation UI completion
+- Disease history and tracking features
+- Multi-crop and field management enhancements
+
+## [1.5.0] - 2025-10-24
+
+### Added - Epic 3 Crop Health Monitoring (Stories 3.1, 3.2, 3.3, 3.5)
+
+**Story 3.1: Image Capture and Upload Interface**
+- Camera integration with expo-camera for photo capture
+- Gallery upload support for existing photos (up to 5 images)
+- Image quality validation (blur detection, resolution checks)
+- GPS location capture with images
+- Crop type selection with 12 crop types (multilingual)
+- Health check grouping system for multiple images
+- Image preview with retake/confirm workflow
+- Quality indicators (green/yellow/red for validation)
+
+**Story 3.2: On-Device Disease Detection**
+- Disease database with 55 classes covering Pakistani crops
+- Wheat (9 diseases), Rice (10), Cotton (10), Sugarcane (10), Corn (10)
+- Nutrient deficiencies (5 types: N, P, K, Fe, Zn)
+- TensorFlow Lite inference architecture (mock-ready)
+- Multi-image analysis with consensus voting
+- Confidence-based recommendations
+- Multilingual disease names (English, Urdu, Punjabi, Sindhi)
+- Disease result screen with top 3 predictions
+
+**Story 3.3: Cloud-Based Enhanced Analysis**
+- Multi-provider AI vision support (Gemini, GPT-4 Vision)
+- Cloud analysis queue with automatic retry
+- Result comparison (on-device vs cloud)
+- Structured JSON response parsing
+- Treatment reasoning generation
+- Provider fallback mechanism
+- Detailed diagnostic analysis
+
+**Story 3.5: Local Supplier Integration**
+- Supplier database with 10+ Pakistani suppliers
+- Location-based search using Haversine distance
+- Phone, WhatsApp, SMS, and maps integration
+- Pakistani phone number formatting (+92)
+- Product availability tracking (crowdsourced)
+- Alternative product recommendations
+- Favorite suppliers management (max 20)
+- Contact attempt tracking
+
+### Database
+- Migration 006: health_checks table, extended images
+- Migration 007: diseases table (55 disease classes)
+- Migration 008: cloud_analysis_queue table
+- Migration 009: 7 supplier-related tables
+- Database version 9 (19 total tables)
+
+### Technical Improvements
+- 40+ services across AI, cache, cloud, image, monitoring, supplier, sync categories
+- 25+ comprehensive test files
+- ~14,000 additional lines of production code
+- Haversine distance calculation for SQLite
+- Platform-specific imports for web compatibility
+- Mock providers for development without API keys
+
+## [1.4.0] - 2025-10-23
+
+### Added - Epic 1 Completion (Story 1.6)
+
+**Story 1.6: Network Status and Sync Monitoring**
+- Comprehensive sync status dashboard
+- Real-time network quality monitoring
+- Data usage tracking (WiFi/cellular breakdown)
+- Sync history with last 100 operations
+- WiFi-only sync preference settings
+- Sync success rate calculation
+- Network quality assessment (excellent/good/fair/poor)
+- Manual sync trigger with immediate feedback
+
+### Database
+- Migration 005: sync_history, data_usage, sync_preferences, sync_state_metadata tables
+- 4 new repositories for sync monitoring
+- Database version 6
+
+### Technical Improvements
+- Granular data usage tracking by operation type
+- Sync state management with metrics
+- Historical sync operation logs
+- Real-time connectivity monitoring
+
+## [1.3.0] - 2025-10-23
+
+### Added - Epic 1 Offline Foundation (Stories 1.1-1.5)
 - Comprehensive README documentation for mobile app
 - Root project README with quick start guide
 - Web platform preview support (UI testing only)

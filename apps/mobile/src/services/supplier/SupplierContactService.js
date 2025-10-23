@@ -216,12 +216,26 @@ class SupplierContactService {
    * Validate Pakistani phone number
    */
   isValidPakistaniNumber(phoneNumber) {
-    const formatted = this.formatPakistaniNumber(phoneNumber);
-    const cleaned = formatted.replace('+', '');
+    if (!phoneNumber) return false;
 
-    // Pakistani mobile: +923XXXXXXXXX (13 digits total)
-    // Pakistani landline: +9251XXXXXXX, +9242XXXXXXX, etc. (11-13 digits)
-    return /^92[0-9]{9,11}$/.test(cleaned);
+    // Remove all non-digits to check the raw number
+    const cleaned = phoneNumber.replace(/\D/g, '');
+
+    // Check if it's a valid Pakistani number pattern:
+    // - Starts with 92 (country code): 923XXXXXXXXX (11-13 digits)
+    // - Starts with 0 (local format): 03XXXXXXXXX or 0XX-XXXXXXX (10-11 digits)
+    // Reject if starts with other country codes (e.g., +1 for US)
+
+    if (cleaned.startsWith('92')) {
+      // International format: 92[0-9]{9,11}
+      return /^92[0-9]{9,11}$/.test(cleaned);
+    } else if (cleaned.startsWith('0')) {
+      // Local format: 0[0-9]{9,10}
+      return /^0[0-9]{9,10}$/.test(cleaned);
+    }
+
+    // If doesn't start with 92 or 0, it's likely a foreign number
+    return false;
   }
 
   /**

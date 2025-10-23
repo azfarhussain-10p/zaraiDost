@@ -143,16 +143,44 @@ The app uses **expo-sqlite** for local data persistence on iOS and Android.
 - iOS: `~/Library/Application Support/Expo/SQLite/zarai_dost.db`
 - Android: `/data/data/host.exp.exponent/databases/zarai_dost.db`
 
-**Current schema version:** 3
+**Current schema version:** 9
 
-**Tables:**
+**Tables (19 total):**
+
+**Core Data (Story 1.1)**
 - `farmers` - Farmer profiles
 - `fields` - Agricultural fields
 - `crops` - Crop records
 - `queries` - AI query history
 - `images` - Image metadata and cache
-- `ai_models` - AI model metadata
-- `image_upload_queue` - Offline sync queue
+
+**AI & Models (Stories 1.3, 3.2)**
+- `model_metadata` - AI model versioning
+- `inference_cache` - Cached inference results
+- `diseases` - Disease taxonomy (55 classes)
+
+**Caching (Story 1.5)**
+- `weather_cache` - 7-day weather forecasts
+- `advisories_cache` - Agricultural advisories
+- `cache_metadata` - Cache management
+
+**Sync & Monitoring (Stories 1.2, 1.6)**
+- `sync_history` - Sync operation logs
+- `data_usage` - Data consumption tracking
+- `sync_preferences` - User sync settings
+- `sync_state_metadata` - Sync system state
+
+**Crop Health (Stories 3.1, 3.3)**
+- `health_checks` - Health check sessions
+- `cloud_analysis_queue` - Cloud analysis queue
+
+**Suppliers (Story 3.5)**
+- `suppliers` - Supplier directory
+- `supplier_products` - Product catalog
+- `farmer_favorite_suppliers` - Favorites
+- `product_alternatives` - Alternative products
+- `farmer_contributions` - Crowdsourced data
+- `supplier_contact_attempts` - Contact tracking
 
 ### Web Platform
 
@@ -160,6 +188,42 @@ Uses a **mock database** that:
 - Returns empty arrays for queries
 - Accepts all writes (but doesn't persist)
 - Prevents crashes with stub implementations
+
+## ✨ Implemented Features
+
+### Offline-First Intelligence (Epic 1 - 100% Complete)
+- ✅ Local SQLite data storage with 19 tables
+- ✅ Background synchronization with conflict resolution
+- ✅ Offline AI model infrastructure
+- ✅ Image processing queue with prioritization
+- ✅ Weather and advisory caching (7-day retention)
+- ✅ Network monitoring and sync status dashboard
+- ✅ Data usage tracking (WiFi/cellular)
+
+### Crop Health Monitoring (Epic 3 - 44% Complete)
+- ✅ Camera integration with quality validation
+- ✅ Multi-image capture (up to 5 per check)
+- ✅ GPS location tagging
+- ✅ Crop type selection (12 crops, multilingual)
+- ✅ Disease detection (55+ classes)
+- ✅ On-device AI analysis (mock-ready)
+- ✅ Cloud vision analysis (Gemini, GPT-4V)
+- ✅ Multi-image consensus analysis
+- ✅ Local supplier search (10+ suppliers)
+- ✅ Phone/WhatsApp/SMS integration
+- ✅ Product availability tracking
+- 🔄 Treatment recommendations (data layer complete)
+- 📋 Disease history tracking (planned)
+- 📋 Multi-field management (planned)
+
+### Key Capabilities
+- **Multilingual**: English, Urdu, Punjabi, Sindhi
+- **Offline Operation**: Full functionality without internet
+- **Smart Sync**: WiFi-only option, automatic retry
+- **Quality Validation**: Blur detection, resolution checks
+- **Location Services**: GPS capture with accuracy tracking
+- **Crowdsourced Data**: Community availability updates
+- **Contact Integration**: Direct calling, WhatsApp, maps
 
 ## 🧪 Testing
 
@@ -181,19 +245,39 @@ npm test -- --coverage
 ## 📦 Key Dependencies
 
 ### Core
-- `expo` - Development framework
-- `react-native` - Mobile framework
-- `expo-sqlite` - Database (native only)
-- `@react-navigation/native` - Navigation
+- `expo` ^52.0.17 - Development framework
+- `react-native` 0.76.9 - Mobile framework
+- `react` ^18.3.1 - React library
+- `expo-sqlite` ~15.1.4 - Database (native only)
+- `@react-navigation/native` ^6.1.18 - Navigation
+- `@react-navigation/native-stack` ^6.11.0 - Stack navigation
 
 ### Web Support
-- `react-native-web` - Web compatibility layer
-- `react-dom` - React DOM renderer
+- `react-native-web` ~0.19.13 - Web compatibility layer
+- `react-dom` 18.3.1 - React DOM renderer
 
-### Storage & Files
-- `expo-file-system` - File operations (native only)
-- `expo-image-picker` - Image selection
-- `expo-location` - GPS services
+### Camera & Images
+- `expo-camera` (for camera capture)
+- `expo-image-picker` ~16.0.6 - Gallery selection
+- `expo-image-manipulator` ~13.0.6 - Image processing
+- `expo-file-system` ^18.0.4 - File operations (native only)
+
+### Location & Network
+- `expo-location` ~18.0.10 - GPS services
+- `@react-native-community/netinfo` ^11.4.1 - Network monitoring
+
+### Background Tasks
+- `expo-background-fetch` ~13.0.6 - Background sync
+- `expo-task-manager` ~12.0.6 - Task scheduling
+
+### Utilities
+- `uuid` ^11.0.4 - Unique ID generation
+- `expo-crypto` ~14.0.2 - Cryptographic operations
+
+### Testing
+- `jest` ^29.7.0 - Test framework
+- `jest-expo` ^52.0.1 - Expo Jest preset
+- `@testing-library/react-native` ^12.4.0 - Component testing
 
 ## 🐛 Troubleshooting
 
