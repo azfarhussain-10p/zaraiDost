@@ -15,6 +15,26 @@ Zarai Dost is a comprehensive farming assistant that works offline-first, helpin
 - **Weather & Advisory Cache**: Offline access to weather and agricultural advisories
 - **Supplier Network**: Location-based supplier search with contact integration
 
+## 💼 Business Model
+
+Zarai Dost operates on a **freemium model** with multiple revenue streams:
+
+- **🆓 Free Tier**: Full offline disease detection, treatment recommendations, and supplier directory
+- **⭐ Premium Tier** (PKR 1,500/year): Unlimited health checks, cloud AI analysis, PDF reports, and advanced insights
+- **🤝 Supplier Partnerships**: Enhanced and premium listings for agricultural suppliers (PKR 5K-50K/month)
+- **📊 Data Intelligence**: Anonymized agricultural insights for research institutions and government
+- **💰 Transaction Commissions**: 3-5% commission on facilitated purchases
+
+### Market Opportunity
+
+- **Target Market**: 9.5 million farmers in Pakistan
+- **Addressable Market**: 4 million smartphone-owning farmers (growing 15% annually)
+- **Year 1 Goal**: 100,000 users, 5,000 premium subscribers
+- **Year 3 Target**: 1,000,000 users, PKR 280M revenue
+- **Year 5 Vision**: 2M+ users, PKR 1.26B revenue
+
+📄 **[View Complete Business Model](docs/businessModel.md)** - Detailed revenue strategy, market analysis, growth plans, and financial projections
+
 ## 📁 Project Structure
 
 ```
@@ -112,10 +132,14 @@ npm run web
 
 ## 📖 Documentation
 
+### Core Documentation
 - **[Mobile App README](apps/mobile/README.md)** - Detailed mobile app documentation
 - **[Architecture](docs/architecture/)** - Technical architecture and design
+  - **[Comprehensive Architecture](docs/architecture/comprehensive-architecture.md)** - Complete system architecture with sequence diagrams
+- **[Business Model](docs/businessModel.md)** ⭐ - Complete business model with revenue strategy, market analysis, and growth plans
 - **[PRD](docs/prd/)** - Product requirements and specifications
 - **[Stories](docs/stories/)** - Development stories and tasks
+- **[Progress Tracker](PROGRESS.md)** - Development progress and completed stories
 
 ## 🔧 Development Workflow
 
