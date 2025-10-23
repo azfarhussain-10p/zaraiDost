@@ -2,6 +2,9 @@
 // Story 1.1: Local Data Storage Foundation
 // Initializes database and sets up navigation
 
+// CRITICAL: Import crypto polyfill FIRST to fix uuid on web
+import './src/utils/crypto-polyfill';
+
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
