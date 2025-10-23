@@ -119,7 +119,7 @@ npm run web
 
 ## 🔧 Development Workflow
 
-This project uses **BMAD-METHOD** for development workflow:
+This project uses **BMAD-METHOD** (Breakthrough Method for Agile Ai Driven Development) for development workflow:
 
 - **PM Agent** - Product management and PRD creation
 - **Architect Agent** - System design and architecture

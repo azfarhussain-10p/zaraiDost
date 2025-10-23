@@ -3,7 +3,7 @@
 # Architecture Document for Zarai Dost
 
 ## System Overview
-Zarai Dost's architecture supports offline-first, multimodal AI for agricultural advisory, optimized for rural deployment. It uses a wrapper layer to abstract models (GPT/Claude/Gemini/Llama), ensuring extensibility. Components: Frontends (mobile/web), backend services, AI orchestration, data handling. Drivers: Intermittent connectivity, security for farm data, low-end device optimization.
+Zarai Dost's architecture supports offline, multimodal AI for agricultural advisory, optimized for rural deployment. It uses a wrapper layer to abstract models (GPT/Claude/Gemini/Llama), ensuring extensibility. Components: Frontends (mobile/web), backend services, AI orchestration, data handling. Drivers: Intermittent connectivity, security for farm data, low-end device optimization.
 
 ## Architectural Principles and Best Practices
 - **Modular/Extensible**: Microservices for scaling; wrapper for model swaps.
@@ -17,7 +17,7 @@ Zarai Dost's architecture supports offline-first, multimodal AI for agricultural
 - **Backend**: Node.js/Express with GraphQL; Python for AI tasks; AWS/Heroku deployment.
 - **AI Wrapper**: Abstraction for models; LangChain for orchestration (multi-agent workflows, e.g., vision + advisory).
 - **Data Layer**: PostgreSQL (structured); Redis (caching); S3 (images). Pre/post-processing: Image augmentation, output localization.
-- **Integrations**: IBM Weather, Google Speech-to-Text, mandi APIs.
+- **Integrations**: Weather, Speech-to-Text, and other relevant APIs.
 
 | Component | Technology | Purpose | Scalability Notes |
 |-----------|------------|---------|-------------------|
